@@ -1,5 +1,4 @@
 const db = require("../models");
-// const approvalList = require("../controllers/approvalListController.js");
 const Machine = db.machine;
 const Op = db.Sequelize.Op;
 exports.create = (req, res) => {
@@ -12,7 +11,7 @@ exports.create = (req, res) => {
         return;
       }
 
-      // Create a Tutorial
+      // Create a Machine
       const machine = {
         machine_name: req.body.machine_name,
         number_of_heads: req.body.number_of_heads,
@@ -51,7 +50,7 @@ exports.findAll = (req, res) => {
       });
 };
 
-// Find a single Tutorial with an id
+// Find a single Machine with an id
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
@@ -61,12 +60,12 @@ exports.findOne = (req, res) => {
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error retrieving Tutorial with id=" + id
+          message: "Error retrieving Machine with id=" + id
         });
       });
 };
 
-// Update a Tutorial by the id in the request
+// Update a Machine by the id in the request
 exports.update = (req, res) => {
     const id = req.params.id;
     console.log(id)
@@ -76,22 +75,22 @@ exports.update = (req, res) => {
       .then(num => {
         if (num == 1) {
           res.send({
-            message: "Tutorial was updated successfully."
+            message: "Machine was updated successfully."
           });
         } else {
           res.send({
-            message: `Cannot update Tutorial with id=${id}. Maybe Tutorial was not found or req.body is empty!`
+            message: `Cannot update Machine with id=${id}. Maybe Machine was not found or req.body is empty!`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error updating Tutorial with id=" + id
+          message: "Error updating Machine with id=" + id
         });
       });
 };
 
-// Delete a Tutorial with the specified id in the request
+// Delete a Machine with the specified id in the request
 exports.delete = (req, res) => {
     const id = req.params.id;
 
@@ -101,17 +100,17 @@ exports.delete = (req, res) => {
       .then(num => {
         if (num == 1) {
           res.send({
-            message: "Tutorial was deleted successfully!"
+            message: "Machine was deleted successfully!"
           });
         } else {
           res.send({
-            message: `Cannot delete Tutorial with id=${id}. Maybe Tutorial was not found!`
+            message: `Cannot delete Machine with id=${id}. Maybe Machine was not found!`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Could not delete Tutorial with id=" + id
+          message: "Could not delete Machine with id=" + id
         });
       });
 };

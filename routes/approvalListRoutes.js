@@ -2,25 +2,24 @@ module.exports = app => {
     const approvalList = require("../controllers/approvalListController.js");
     var router = require("express").Router();
   
-    // Create a new Tutorial
+    // Create a new Approval
     router.post("/", approvalList.create);
   
-    // Retrieve all Tutorials
+    // Retrieve all Approvals
     router.get("/", approvalList.findAll);
   
-    // Retrieve all published Tutorials
+    // Retrieve all published Approvals
     router.get("/published", approvalList.findAllPublished);
-  
-    // Retrieve a single Tutorial with id
+    // Retrieve a single Approval with id
     router.get("/:id", approvalList.findOne);
   
-    // Update a Tutorial with id
+    // Update a Approval with id
     router.put("/:id", approvalList.update);
   
-    // Delete a Tutorial with id
+    // Delete a Approval with id
     router.delete("/:id", approvalList.delete);
   
-    // Delete all Tutorials
+    // Delete all Approvals
     router.delete("/", approvalList.deleteAll);
   
     app.use('/api/approvalList', router);

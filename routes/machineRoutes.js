@@ -2,25 +2,25 @@ module.exports = app => {
     const machine = require("../controllers/machineController.js");
     var router = require("express").Router();
   
-    // Create a new Tutorial
+    // Create a new Machine
     router.post("/", machine.create);
   
-    // Retrieve all Tutorials
+    // Retrieve all Machines
     router.get("/", machine.findAll);
   
-    // Retrieve all published Tutorials
+    // Retrieve all published Machines
     router.get("/published", machine.findAllPublished);
   
-    // Retrieve a single Tutorial with id
+    // Retrieve a single Machine with id
     router.get("/:id", machine.findOne);
   
-    // Update a Tutorial with id
+    // Update a Machine with id
     router.put("/:id", machine.update);
   
-    // Delete a Tutorial with id
+    // Delete a Machine with id
     router.delete("/:id", machine.delete);
   
-    // Delete all Tutorials
+    // Delete all Machines
     router.delete("/", machine.deleteAll);
   
     app.use('/api/machine', router);

@@ -1,5 +1,4 @@
 const db = require("../models");
-// const approvalList = require("../controllers/approvalListController.js");
 const CncProgram = db.cncProgram;
 const Op = db.Sequelize.Op;
 exports.create = (req, res) => {
@@ -12,7 +11,7 @@ exports.create = (req, res) => {
         return;
       }
 
-      // Create a Tutorial
+      // Create a CNC Program
       const cncProgram = {
         part_id: req.body.part_id,
         operation_id: req.body.operation_id,
@@ -54,7 +53,7 @@ exports.findAll = (req, res) => {
       });
 };
 
-// Find a single Tutorial with an id
+// Find a single CNC Program with an id
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
@@ -64,12 +63,12 @@ exports.findOne = (req, res) => {
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error retrieving Tutorial with id=" + id
+          message: "Error retrieving CNC Program with id=" + id
         });
       });
 };
 
-// Update a Tutorial by the id in the request
+// Update a CNC Program by the id in the request
 exports.update = (req, res) => {
     const id = req.params.id;
     console.log(id)
@@ -79,22 +78,22 @@ exports.update = (req, res) => {
       .then(num => {
         if (num == 1) {
           res.send({
-            message: "Tutorial was updated successfully."
+            message: "CNC Program was updated successfully."
           });
         } else {
           res.send({
-            message: `Cannot update Tutorial with id=${id}. Maybe Tutorial was not found or req.body is empty!`
+            message: `Cannot update CNC Program with id=${id}. Maybe CNC Program was not found or req.body is empty!`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error updating Tutorial with id=" + id + err
+          message: "Error updating CNC Program with id=" + id + err
         });
       });
 };
 
-// Delete a Tutorial with the specified id in the request
+// Delete a CNC Program with the specified id in the request
 exports.delete = (req, res) => {
     const id = req.params.id;
 
@@ -104,17 +103,17 @@ exports.delete = (req, res) => {
       .then(num => {
         if (num == 1) {
           res.send({
-            message: "Tutorial was deleted successfully!"
+            message: "CNC Program was deleted successfully!"
           });
         } else {
           res.send({
-            message: `Cannot delete Tutorial with id=${id}. Maybe Tutorial was not found!`
+            message: `Cannot delete CNC Program with id=${id}. Maybe CNC Program was not found!`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Could not delete Tutorial with id=" + id
+          message: "Could not delete CNC Program with id=" + id
         });
       });
 };

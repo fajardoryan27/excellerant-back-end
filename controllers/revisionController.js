@@ -1,5 +1,4 @@
 const db = require("../models");
-// const approvalList = require("../controllers/approvalListController.js");
 const Revision = db.revision;
 const Op = db.Sequelize.Op;
 exports.create = (req, res) => {
@@ -12,7 +11,7 @@ exports.create = (req, res) => {
         return;
       }
 
-      // Create a Tutorial
+      // Create a Revision
       const revision = {
         revision_number: req.body.revision_number,
         created_by: req.body.created_by,
@@ -39,7 +38,7 @@ exports.create = (req, res) => {
         });
 };
 
-// Retrieve all Tutorials from the database.
+// Retrieve all Revisions from the database.
 exports.findAll = (req, res) => {
     const revision_number = req.query.revision_number;
     var condition = revision_number ? { revision_number: { [Op.like]: `%${revision_number}%` } } : null;
@@ -51,12 +50,12 @@ exports.findAll = (req, res) => {
       .catch(err => {
         res.status(500).send({
           message:
-            err.message || "Some error occurred while retrieving tutorials."
+            err.message || "Some error occurred while retrieving Revisions."
         });
       });
 };
 
-// Find a single Tutorial with an id
+// Find a single Revision with an id
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
@@ -66,12 +65,12 @@ exports.findOne = (req, res) => {
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error retrieving Tutorial with id=" + id
+          message: "Error retrieving Revision with id=" + id
         });
       });
 };
 
-// Update a Tutorial by the id in the request
+// Update a Revision by the id in the request
 exports.update = (req, res) => {
     const id = req.params.id;
     console.log(id)
@@ -81,22 +80,22 @@ exports.update = (req, res) => {
       .then(num => {
         if (num == 1) {
           res.send({
-            message: "Tutorial was updated successfully."
+            message: "Revision was updated successfully."
           });
         } else {
           res.send({
-            message: `Cannot update Tutorial with id=${id}. Maybe Tutorial was not found or req.body is empty!`
+            message: `Cannot update Revision with id=${id}. Maybe Revision was not found or req.body is empty!`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error updating Tutorial with id=" + id + err
+          message: "Error updating Revision with id=" + id + err
         });
       });
 };
 
-// Delete a Tutorial with the specified id in the request
+// Delete a Revision with the specified id in the request
 exports.delete = (req, res) => {
     const id = req.params.id;
 
@@ -106,39 +105,39 @@ exports.delete = (req, res) => {
       .then(num => {
         if (num == 1) {
           res.send({
-            message: "Tutorial was deleted successfully!"
+            message: "Revision was deleted successfully!"
           });
         } else {
           res.send({
-            message: `Cannot delete Tutorial with id=${id}. Maybe Tutorial was not found!`
+            message: `Cannot delete Revision with id=${id}. Maybe Revision was not found!`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Could not delete Tutorial with id=" + id
+          message: "Could not delete Revision with id=" + id
         });
       });
 };
 
-// Delete all Tutorials from the database.
+// Delete all Revisions from the database.
 exports.deleteAll = (req, res) => {
     Revision.destroy({
         where: {},
         truncate: false
       })
         .then(nums => {
-          res.send({ message: `${nums} Tutorials were deleted successfully!` });
+          res.send({ message: `${nums} Revisions were deleted successfully!` });
         })
         .catch(err => {
           res.status(500).send({
             message:
-              err.message || "Some error occurred while removing all tutorials."
+              err.message || "Some error occurred while removing all Revisions."
           });
         });
 };
 
-// Find all published Tutorials
+// Find all published Revisions
 exports.findAllPublished = (req, res) => {
     Revision.findAll({ where: { published: true } })
     .then(data => {
@@ -147,7 +146,7 @@ exports.findAllPublished = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving tutorials."
+          err.message || "Some error occurred while retrieving Revisions."
       });
     });
 };

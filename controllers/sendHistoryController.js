@@ -1,6 +1,5 @@
 const db = require("../models");
 const moment = require("moment");
-// const approvalList = require("../controllers/approvalListController.js");
 const SendHistory = db.sendHistory;
 const Op = db.Sequelize.Op;
 exports.create = (req, res) => {
@@ -15,7 +14,7 @@ exports.create = (req, res) => {
       var momentDate = moment("2014-09-15 09:00:00");
        console.log(momentDate.toDate()) 
        console.log(Date.parse(momentDate.toDate()))
-      // Create a Tutorial
+      // Create a Send History
       const send_history = {
         program_id: req.body.program_id,
         revision_id: req.body.revision_id,
@@ -40,7 +39,7 @@ exports.create = (req, res) => {
         });
 };
 
-// Retrieve all Tutorials from the database.
+// Retrieve all Send Histories from the database.
 exports.findAll = (req, res) => {
     const program_id = req.query.program_id;
     var condition = program_id ? { program_id: { [Op.like]: `%${program_id}%` } } : null;
@@ -52,12 +51,12 @@ exports.findAll = (req, res) => {
       .catch(err => {
         res.status(500).send({
           message:
-            err.message || "Some error occurred while retrieving tutorials."
+            err.message || "Some error occurred while retrieving Send Histories."
         });
       });
 };
 
-// Find a single Tutorial with an id
+// Find a single Send History with an id
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
@@ -67,12 +66,12 @@ exports.findOne = (req, res) => {
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error retrieving Tutorial with id=" + id
+          message: "Error retrieving Send History with id=" + id
         });
       });
 };
 
-// Update a Tutorial by the id in the request
+// Update a Send History by the id in the request
 exports.update = (req, res) => {
     const id = req.params.id;
     console.log(id)
@@ -82,22 +81,22 @@ exports.update = (req, res) => {
       .then(num => {
         if (num == 1) {
           res.send({
-            message: "Tutorial was updated successfully."
+            message: "Send History was updated successfully."
           });
         } else {
           res.send({
-            message: `Cannot update Tutorial with id=${id}. Maybe Tutorial was not found or req.body is empty!`
+            message: `Cannot update Send History with id=${id}. Maybe Send History was not found or req.body is empty!`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error updating Tutorial with id=" + id
+          message: "Error updating Send History with id=" + id
         });
       });
 };
 
-// Delete a Tutorial with the specified id in the request
+// Delete a Send History with the specified id in the request
 exports.delete = (req, res) => {
     const id = req.params.id;
 
@@ -107,39 +106,39 @@ exports.delete = (req, res) => {
       .then(num => {
         if (num == 1) {
           res.send({
-            message: "Tutorial was deleted successfully!"
+            message: "Send History was deleted successfully!"
           });
         } else {
           res.send({
-            message: `Cannot delete Tutorial with id=${id}. Maybe Tutorial was not found!`
+            message: `Cannot delete Send History with id=${id}. Maybe Send History was not found!`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Could not delete Tutorial with id=" + id
+          message: "Could not delete Send History with id=" + id
         });
       });
 };
 
-// Delete all Tutorials from the database.
+// Delete all Send Histories from the database.
 exports.deleteAll = (req, res) => {
     SendHistory.destroy({
         where: {},
         truncate: false
       })
         .then(nums => {
-          res.send({ message: `${nums} Tutorials were deleted successfully!` });
+          res.send({ message: `${nums} Send Histories were deleted successfully!` });
         })
         .catch(err => {
           res.status(500).send({
             message:
-              err.message || "Some error occurred while removing all tutorials."
+              err.message || "Some error occurred while removing all Send Histories."
           });
         });
 };
 
-// Find all published Tutorials
+// Find all published Send Histories
 exports.findAllPublished = (req, res) => {
     SendHistory.findAll({ where: { published: true } })
     .then(data => {
@@ -148,7 +147,7 @@ exports.findAllPublished = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving tutorials."
+          err.message || "Some error occurred while retrieving Send Histories."
       });
     });
 };

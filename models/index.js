@@ -1,10 +1,16 @@
-const dbConfig = require("../dbconfig.js");
-
+var ini = require('ini')
+var fs = require('fs')
+var config = ini.parse(fs.readFileSync('./Config.ini', 'utf-8'))
 const Sequelize = require("sequelize");
-const sequelize = new Sequelize("nexaDB", "sa", "p@ssw0rd", {
-  host: "localhost",
-  port: 1433,
-  dialect: "mssql",
+const sequelize = new Sequelize(config['dbName'], config['dbUser'], config['dbPass'], {
+  host: config['host'],
+  port: config['port'],
+  dialect: config['dialect'],
+  // dialectOptions: {
+  //   "options": {
+  //       "instanceName": "SQLEXPRESS",
+  //   }
+  // },
   pool: {
     max: 5,
     min: 0,

@@ -2,25 +2,25 @@ module.exports = app => {
     const parts = require("../controllers/machineTypesController.js");
     var router = require("express").Router();
   
-    // Create a new Tutorial
+    // Create a new Machine Type
     router.post("/", parts.create);
   
-    // Retrieve all Tutorials
+    // Retrieve all Machine Types
     router.get("/", parts.findAll);
   
-    // Retrieve all published Tutorials
+    // Retrieve all published Machine Types
     router.get("/published", parts.findAllPublished);
   
-    // Retrieve a single Tutorial with id
+    // Retrieve a single Machine Type with id
     router.get("/:id", parts.findOne);
   
-    // Update a Tutorial with id
+    // Update a Machine Type with id
     router.put("/:id", parts.update);
   
-    // Delete a Tutorial with id
+    // Delete a Machine Type with id
     router.delete("/:id", parts.delete);
   
-    // Delete all Tutorials
+    // Delete all Machine Types
     router.delete("/", parts.deleteAll);
   
     app.use('/api/machineTypes', router);

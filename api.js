@@ -1,18 +1,16 @@
-
-
-// const approvalRoutes = require("./routes/approvalListRoutes")
-// 
 var express = require('express');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 var app = express();
-var router = express.Router();
-
+const db = require("./models");
+var ini = require('ini')
+var fs = require('fs')
+var config = ini.parse(fs.readFileSync('./Config.ini', 'utf-8'))
+var port = config['serverPort']|| 8090;
 
 app.use(bodyParser.urlencoded({ extended: true}))
 app.use(bodyParser.json());
 app.use(cors());
-// app.use('/api',approvalRoutes);
 
 require("./routes/approvalListRoutes")(app);
 require("./routes/partsRoute")(app);
@@ -31,9 +29,8 @@ require("./routes/permissionRoutes")(app);
 require("./routes/userGroupRoutes")(app);
 require("./routes/userRoleRoutes")(app);
 require("./routes/userRolePermissionRoutes")(app);
-const db = require("./models");
+
 db.sequelize.sync();
-var port = process.env.PORT || 8090;
 app.listen(port)
 console.log('Server running in '+ port)
 

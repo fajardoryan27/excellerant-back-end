@@ -8,19 +8,11 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true
     },
     part_name: {
-      type: DataTypes.STRING(15),
+      type: DataTypes.STRING(255),
       allowNull: true
     },
-    approval_requirements: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'ApprovalList',
-        key: 'approval_id'
-      }
-    },
     description: {
-      type: DataTypes.STRING(15),
+      type: DataTypes.STRING(255),
       allowNull: true
     },
     itar_restricted: {
@@ -29,10 +21,6 @@ module.exports = function(sequelize, DataTypes) {
     },
     revision_number: {
       type: DataTypes.INTEGER,
-      allowNull: true
-    },
-    part_authorization_type: {
-      type: DataTypes.STRING(15),
       allowNull: true
     }
   }, {
@@ -43,7 +31,7 @@ module.exports = function(sequelize, DataTypes) {
     underscored: true,
     indexes: [
       {
-        name: "PK__Parts__A0E3FAB8DCF53D35",
+        name: "PK__Parts__A0E3FAB82287E5C1",
         unique: true,
         fields: [
           { name: "part_id" },

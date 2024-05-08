@@ -1,27 +1,20 @@
 const db = require("../models");
-// const approvalList = require("../controllers/approvalListController.js");
 const ApprovalList = db.approvalList;
 const Op = db.Sequelize.Op;
 exports.create = (req, res) => {
-    console.log(req.body)
-    console.log(req.body[0])
-    console.log(req.body.programmer)
+  
     if (!req.body.programmer) {
         res.status(400).send({
           message: "Content can not be empty!"
         });
         return;
       }
-    
-      // Create a Tutorial
+      // Create a Approval
       const approvalList = {
         programmer: req.body.programmer,
         engineer: req.body.engineer,
         quality: req.body.quality 
-      };
-
-      console.log(approvalList)
-    
+      };    
       ApprovalList.create(approvalList)
         .then(data => {
           res.send(data);
@@ -29,16 +22,15 @@ exports.create = (req, res) => {
         .catch(err => {
           res.status(500).send({
             message:
-              err.message || "Some error occurred while creating the Tutorial."
+              err.message || "Some error occurred while creating the Approval List."
           });
         });
 };
 
-// Retrieve all Tutorials from the database.
+// Retrieve all Approval List from the database.
 exports.findAll = (req, res) => {
     const Engineer = req.query.engineer;
     var condition = Engineer ? { Engineer: { [Op.like]: `%${Engineer}%` } } : null;
-  
     ApprovalList.findAll({ where: condition })
       .then(data => {
         res.send(data);
@@ -46,12 +38,12 @@ exports.findAll = (req, res) => {
       .catch(err => {
         res.status(500).send({
           message:
-            err.message || "Some error occurred while retrieving tutorials."
+            err.message || "Some error occurred while retrieving Approval List."
         });
       });
 };
 
-// Find a single Tutorial with an id
+// Find a single Approval List with an id
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
@@ -61,12 +53,12 @@ exports.findOne = (req, res) => {
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error retrieving Tutorial with id=" + id
+          message: "Error retrieving Approval List with id=" + id
         });
       });
 };
 
-// Update a Tutorial by the id in the request
+// Update a Approval List by the id in the request
 exports.update = (req, res) => {
     const id = req.params.id;
 
@@ -76,22 +68,22 @@ exports.update = (req, res) => {
       .then(num => {
         if (num == 1) {
           res.send({
-            message: "Tutorial was updated successfully."
+            message: "Approval List was updated successfully."
           });
         } else {
           res.send({
-            message: `Cannot update Tutorial with id=${id}. Maybe Tutorial was not found or req.body is empty!`
+            message: `Cannot update Approval List with id=${id}. Maybe Approval List was not found or req.body is empty!`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error updating Tutorial with id=" + id
+          message: "Error updating Approval List with id=" + id
         });
       });
 };
 
-// Delete a Tutorial with the specified id in the request
+// Delete a Approval List with the specified id in the request
 exports.delete = (req, res) => {
     const id = req.params.id;
 
@@ -101,17 +93,17 @@ exports.delete = (req, res) => {
       .then(num => {
         if (num == 1) {
           res.send({
-            message: "Tutorial was deleted successfully!"
+            message: "Approval List was deleted successfully!"
           });
         } else {
           res.send({
-            message: `Cannot delete Tutorial with id=${id}. Maybe Tutorial was not found!`
+            message: `Cannot delete Approval List with id=${id}. Maybe Approval List was not found!`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Could not delete Tutorial with id=" + id
+          message: "Could not delete Approval List with id=" + id
         });
       });
 };

@@ -11,7 +11,7 @@ exports.create = (req, res) => {
         return;
       }
 
-      // Create a Tutorial
+      // Create a Machine Types Member
       const machineTypesMember = {
         machine_type_id: req.body.machine_type_id,
         machine_id: req.body.machine_id
@@ -32,7 +32,7 @@ exports.create = (req, res) => {
         });
 };
 
-// Retrieve all Tutorials from the database.
+// Retrieve all Machine Types Member from the database.
 exports.findAll = (req, res) => {
     const machine_type_id = req.query.machine_type_id;
     var condition = machine_type_id ? { machine_type_id: { [Op.like]: `%${machine_type_id}%` } } : null;
@@ -44,12 +44,12 @@ exports.findAll = (req, res) => {
       .catch(err => {
         res.status(500).send({
           message:
-            err.message || "Some error occurred while retrieving tutorials."
+            err.message || "Some error occurred while retrieving Machine Types Member."
         });
       });
 };
 
-// Find a single Tutorial with an id
+// Find a single Machine Types Member with an id
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
@@ -59,12 +59,12 @@ exports.findOne = (req, res) => {
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error retrieving Tutorial with id=" + id
+          message: "Error retrieving Machine Types Member with id=" + id
         });
       });
 };
 
-// Update a Tutorial by the id in the request
+// Update a Machine Types Member by the id in the request
 exports.update = (req, res) => {
     const id = req.params.id;
     console.log(id)
@@ -74,22 +74,22 @@ exports.update = (req, res) => {
       .then(num => {
         if (num == 1) {
           res.send({
-            message: "Tutorial was updated successfully."
+            message: "Machine Types Member was updated successfully."
           });
         } else {
           res.send({
-            message: `Cannot update Tutorial with id=${id}. Maybe Tutorial was not found or req.body is empty!`
+            message: `Cannot update Machine Types Member with id=${id}. Maybe Machine Types Member was not found or req.body is empty!`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error updating Tutorial with id=" + id
+          message: "Error updating Machine Types Member with id=" + id
         });
       });
 };
 
-// Delete a Tutorial with the specified id in the request
+// Delete a Machine Types Member with the specified id in the request
 exports.delete = (req, res) => {
     const id = req.params.id;
 
@@ -99,39 +99,39 @@ exports.delete = (req, res) => {
       .then(num => {
         if (num == 1) {
           res.send({
-            message: "Tutorial was deleted successfully!"
+            message: "Machine Types Member was deleted successfully!"
           });
         } else {
           res.send({
-            message: `Cannot delete Tutorial with id=${id}. Maybe Tutorial was not found!`
+            message: `Cannot delete Machine Types Member with id=${id}. Maybe Machine Types Member was not found!`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Could not delete Tutorial with id=" + id
+          message: "Could not delete Machine Types Member with id=" + id
         });
       });
 };
 
-// Delete all Tutorials from the database.
+// Delete all Machine Types Member from the database.
 exports.deleteAll = (req, res) => {
         MachineTypesMember.destroy({
         where: {},
         truncate: false
       })
         .then(nums => {
-          res.send({ message: `${nums} Tutorials were deleted successfully!` });
+          res.send({ message: `${nums} Machine Types Member were deleted successfully!` });
         })
         .catch(err => {
           res.status(500).send({
             message:
-              err.message || "Some error occurred while removing all tutorials."
+              err.message || "Some error occurred while removing all Machine Types Member."
           });
         });
 };
 
-// Find all published Tutorials
+// Find all published Machine Types Member
 exports.findAllPublished = (req, res) => {
     MachineTypesMember.findAll({ where: { published: true } })
     .then(data => {
@@ -140,7 +140,7 @@ exports.findAllPublished = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving tutorials."
+          err.message || "Some error occurred while retrieving Machine Types Member."
       });
     });
 };

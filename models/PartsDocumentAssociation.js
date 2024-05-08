@@ -1,32 +1,36 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('MachineTypes', {
-    machine_type_id: {
+  return sequelize.define('PartsDocumentAssociation', {
+    part_docs_id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    machine_type_name: {
-      type: DataTypes.STRING(255),
-      allowNull: true
+    part_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'Parts',
+        key: 'part_id'
+      }
     },
-    machine_type_desc: {
+    p_docs_location: {
       type: DataTypes.STRING(255),
       allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'MachineTypes',
+    tableName: 'PartsDocumentAssociation',
     schema: 'dbo',
     timestamps: false,
     underscored: true,
     indexes: [
       {
-        name: "PK__MachineT__715BF72A6118126D",
+        name: "PK__PartsDoc__95227D822506B61B",
         unique: true,
         fields: [
-          { name: "machine_type_id" },
+          { name: "part_docs_id" },
         ]
       },
     ]

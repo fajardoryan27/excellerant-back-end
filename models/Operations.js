@@ -16,11 +16,11 @@ module.exports = function(sequelize, DataTypes) {
       }
     },
     operation_name: {
-      type: DataTypes.STRING(15),
+      type: DataTypes.STRING(255),
       allowNull: true
     },
     type: {
-      type: DataTypes.STRING(15),
+      type: DataTypes.STRING(255),
       allowNull: true
     }
   }, {
@@ -31,7 +31,7 @@ module.exports = function(sequelize, DataTypes) {
     underscored: true,
     indexes: [
       {
-        name: "PK__Operatio__F8BE6CC870F2C686",
+        name: "PK__Operatio__F8BE6CC8498407D2",
         unique: true,
         fields: [
           { name: "operations_id" },

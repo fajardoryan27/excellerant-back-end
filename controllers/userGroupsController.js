@@ -1,5 +1,4 @@
 const db = require("../models");
-// const approvalList = require("../controllers/approvalListController.js");
 const UserGroups = db.usergroups;
 const Op = db.Sequelize.Op;
 exports.create = (req, res) => {
@@ -12,7 +11,7 @@ exports.create = (req, res) => {
         return;
     }
 
-      // Create a Tutorial
+      // Create a User Group
       const usergroups = {
         group_name: req.body.group_name,
         group_permission: req.body.group_permission
@@ -32,7 +31,7 @@ exports.create = (req, res) => {
         });
 };
 
-// Retrieve all Tutorials from the database.
+// Retrieve all User Groups from the database.
 exports.findAll = (req, res) => {
     const group_name = req.query.group_name;
     var condition = group_name ? { group_name: { [Op.like]: `%${group_name}%` } } : null;
@@ -44,12 +43,12 @@ exports.findAll = (req, res) => {
       .catch(err => {
         res.status(500).send({
           message:
-            err.message || "Some error occurred while retrieving tutorials."
+            err.message || "Some error occurred while retrieving User Groups."
         });
       });
 };
 
-// Find a single Tutorial with an id
+// Find a single User Group with an id
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
@@ -59,12 +58,12 @@ exports.findOne = (req, res) => {
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error retrieving Tutorial with id=" + id
+          message: "Error retrieving User Group with id=" + id
         });
       });
 };
 
-// Update a Tutorial by the id in the request
+// Update a User Group by the id in the request
 exports.update = (req, res) => {
     const id = req.params.id;
     console.log(id)
@@ -74,22 +73,22 @@ exports.update = (req, res) => {
       .then(num => {
         if (num == 1) {
           res.send({
-            message: "Tutorial was updated successfully."
+            message: "User Group was updated successfully."
           });
         } else {
           res.send({
-            message: `Cannot update Tutorial with id=${id}. Maybe Tutorial was not found or req.body is empty!`
+            message: `Cannot update User Group with id=${id}. Maybe User Group was not found or req.body is empty!`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error updating Tutorial with id=" + id
+          message: "Error updating User Group with id=" + id
         });
       });
 };
 
-// Delete a Tutorial with the specified id in the request
+// Delete a User Group with the specified id in the request
 exports.delete = (req, res) => {
     const id = req.params.id;
 
@@ -99,39 +98,39 @@ exports.delete = (req, res) => {
       .then(num => {
         if (num == 1) {
           res.send({
-            message: "Tutorial was deleted successfully!"
+            message: "User Group was deleted successfully!"
           });
         } else {
           res.send({
-            message: `Cannot delete Tutorial with id=${id}. Maybe Tutorial was not found!`
+            message: `Cannot delete User Group with id=${id}. Maybe User Group was not found!`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Could not delete Tutorial with id=" + id
+          message: "Could not delete User Group with id=" + id
         });
       });
 };
 
-// Delete all Tutorials from the database.
+// Delete all User Groups from the database.
 exports.deleteAll = (req, res) => {
     UserGroups.destroy({
         where: {},
         truncate: false
       })
         .then(nums => {
-          res.send({ message: `${nums} Tutorials were deleted successfully!` });
+          res.send({ message: `${nums} User Groups were deleted successfully!` });
         })
         .catch(err => {
           res.status(500).send({
             message:
-              err.message || "Some error occurred while removing all tutorials."
+              err.message || "Some error occurred while removing all User Groups."
           });
         });
 };
 
-// Find all published Tutorials
+// Find all published User Groups
 exports.findAllPublished = (req, res) => {
     UserGroups.findAll({ where: { published: true } })
     .then(data => {
@@ -140,7 +139,7 @@ exports.findAllPublished = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving tutorials."
+          err.message || "Some error occurred while retrieving User Groups."
       });
     });
 };

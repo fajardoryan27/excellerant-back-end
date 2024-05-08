@@ -2,25 +2,25 @@ module.exports = app => {
     const sendHistory = require("../controllers/sendHistoryController.js");
     var router = require("express").Router();
   
-    // Create a new Tutorial
+    // Create a new Send History
     router.post("/", sendHistory.create);
   
-    // Retrieve all Tutorials
+    // Retrieve all Send Histories
     router.get("/", sendHistory.findAll);
   
-    // Retrieve all published Tutorials
+    // Retrieve all published Send Histories
     router.get("/published", sendHistory.findAllPublished);
   
-    // Retrieve a single Tutorial with id
+    // Retrieve a single Send History with id
     router.get("/:id", sendHistory.findOne);
   
-    // Update a Tutorial with id
+    // Update a Send History with id
     router.put("/:id", sendHistory.update);
   
-    // Delete a Tutorial with id
+    // Delete a Send History with id
     router.delete("/:id", sendHistory.delete);
   
-    // Delete all Tutorials
+    // Delete all Send Histories
     router.delete("/", sendHistory.deleteAll);
   
     app.use('/api/send_history', router);

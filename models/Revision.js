@@ -8,7 +8,7 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true
     },
     revision_number: {
-      type: DataTypes.STRING(15),
+      type: DataTypes.STRING(255),
       allowNull: true
     },
     created_by: {
@@ -36,20 +36,16 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     revision_comment: {
-      type: DataTypes.STRING(15),
+      type: DataTypes.STRING(255),
       allowNull: true
     },
     database_path: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.STRING(255),
       allowNull: true
     },
     status: {
       type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'Status',
-        key: 'status_id'
-      }
+      allowNull: true
     }
   }, {
     sequelize,
@@ -59,7 +55,7 @@ module.exports = function(sequelize, DataTypes) {
     underscored: true,
     indexes: [
       {
-        name: "PK__Revision__03BAF0056AA9FEBA",
+        name: "PK__Revision__03BAF005C014078D",
         unique: true,
         fields: [
           { name: "revision_id" },

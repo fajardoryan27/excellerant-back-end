@@ -8,16 +8,32 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true
     },
     user_name: {
-      type: DataTypes.STRING(15),
+      type: DataTypes.STRING(255),
       allowNull: true
     },
-    user_email: {
-      type: DataTypes.STRING(15),
+    user_password: {
+      type: DataTypes.STRING(255),
       allowNull: true
     },
-    user_group: {
-      type: DataTypes.STRING(15),
+    first_name: {
+      type: DataTypes.STRING(255),
       allowNull: true
+    },
+    last_name: {
+      type: DataTypes.STRING(255),
+      allowNull: true
+    },
+    email: {
+      type: DataTypes.STRING(255),
+      allowNull: true
+    },
+    role_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'UserRoles',
+        key: 'role_id'
+      }
     }
   }, {
     sequelize,
@@ -27,7 +43,7 @@ module.exports = function(sequelize, DataTypes) {
     underscored: true,
     indexes: [
       {
-        name: "PK__User__B9BE370F0506FB27",
+        name: "PK__User__B9BE370F6272875A",
         unique: true,
         fields: [
           { name: "user_id" },

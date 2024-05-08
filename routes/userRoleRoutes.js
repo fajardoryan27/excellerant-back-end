@@ -2,25 +2,25 @@ module.exports = app => {
     const user_role = require("../controllers/userRoleController.js");
     var router = require("express").Router();
   
-    // Create a new Tutorial
+    // Create a new User Role
     router.post("/", user_role.create);
   
-    // Retrieve all Tutorials
+    // Retrieve all User Roles
     router.get("/", user_role.findAll);
   
-    // Retrieve all published Tutorials
+    // Retrieve all published User Roles
     router.get("/published", user_role.findAllPublished);
   
-    // Retrieve a single Tutorial with id
+    // Retrieve a single User Role with id
     router.get("/:id", user_role.findOne);
   
-    // Update a Tutorial with id
+    // Update a User Role with id
     router.put("/:id", user_role.update);
   
-    // Delete a Tutorial with id
+    // Delete a User Role with id
     router.delete("/:id", user_role.delete);
   
-    // Delete all Tutorials
+    // Delete all User Roles
     router.delete("/", user_role.deleteAll);
   
     app.use('/api/user_role', router);

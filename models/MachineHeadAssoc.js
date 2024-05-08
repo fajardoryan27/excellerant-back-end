@@ -1,43 +1,36 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('UserGroups', {
-    group_id: {
+  return sequelize.define('MachineHeadAssoc', {
+    head_id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    group_name: {
-      type: DataTypes.STRING(50),
+    head_name: {
+      type: DataTypes.STRING(255),
       allowNull: true
     },
-    group_permission: {
+    machine_id: {
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
-        model: 'Permissions',
-        key: 'permission_id'
+        model: 'Machines',
+        key: 'machine_id'
       }
     }
   }, {
     sequelize,
-    tableName: 'UserGroups',
+    tableName: 'MachineHeadAssoc',
     schema: 'dbo',
     timestamps: false,
     underscored: true,
     indexes: [
       {
-        name: "PK__UserGrou__D57795A04BCB3BED",
+        name: "PK__MachineH__D6BE0713FEA022A1",
         unique: true,
         fields: [
-          { name: "group_id" },
-        ]
-      },
-      {
-        name: "PK__UserGrou__D57795A09D9DE664",
-        unique: true,
-        fields: [
-          { name: "group_id" },
+          { name: "head_id" },
         ]
       },
     ]

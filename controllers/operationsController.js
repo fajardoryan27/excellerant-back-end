@@ -9,7 +9,7 @@ exports.create = (req, res) => {
         return;
       }
 
-      // Create a Tutorial
+      // Create a Operations
       const operations = {
         part_id: req.body.part_id,
         operation_name: req.body.operation_name,
@@ -30,7 +30,7 @@ exports.create = (req, res) => {
         });
 };
 
-// Retrieve all Tutorials from the database.
+// Retrieve all Operations from the database.
 exports.findAll = (req, res) => {
     const part_id = req.query.part_id;
     var condition = part_id ? { part_id: { [Op.like]: `%${part_id}%` } } : null;
@@ -42,12 +42,12 @@ exports.findAll = (req, res) => {
       .catch(err => {
         res.status(500).send({
           message:
-            err.message || "Some error occurred while retrieving tutorials."
+            err.message || "Some error occurred while retrieving Operations."
         });
       });
 };
 
-// Find a single Tutorial with an id
+// Find a single Operations with an id
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
@@ -57,12 +57,12 @@ exports.findOne = (req, res) => {
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error retrieving Tutorial with id=" + id
+          message: "Error retrieving Operations with id=" + id
         });
       });
 };
 
-// Update a Tutorial by the id in the request
+// Update a Operations by the id in the request
 exports.update = (req, res) => {
     const id = req.params.id;
     console.log(id)
@@ -72,22 +72,22 @@ exports.update = (req, res) => {
       .then(num => {
         if (num == 1) {
           res.send({
-            message: "Tutorial was updated successfully."
+            message: "Operations was updated successfully."
           });
         } else {
           res.send({
-            message: `Cannot update Tutorial with id=${id}. Maybe Tutorial was not found or req.body is empty!`
+            message: `Cannot update Operations with id=${id}. Maybe Operations was not found or req.body is empty!`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error updating Tutorial with id=" + id
+          message: "Error updating Operations with id=" + id
         });
       });
 };
 
-// Delete a Tutorial with the specified id in the request
+// Delete a Operations with the specified id in the request
 exports.delete = (req, res) => {
     const id = req.params.id;
 
@@ -97,39 +97,39 @@ exports.delete = (req, res) => {
       .then(num => {
         if (num == 1) {
           res.send({
-            message: "Tutorial was deleted successfully!"
+            message: "Operations was deleted successfully!"
           });
         } else {
           res.send({
-            message: `Cannot delete Tutorial with id=${id}. Maybe Tutorial was not found!`
+            message: `Cannot delete Operations with id=${id}. Maybe Operations was not found!`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Could not delete Tutorial with id=" + id
+          message: "Could not delete Operations with id=" + id
         });
       });
 };
 
-// Delete all Tutorials from the database.
+// Delete all Operations from the database.
 exports.deleteAll = (req, res) => {
     Operations.destroy({
         where: {},
         truncate: false
       })
         .then(nums => {
-          res.send({ message: `${nums} Tutorials were deleted successfully!` });
+          res.send({ message: `${nums} Operations were deleted successfully!` });
         })
         .catch(err => {
           res.status(500).send({
             message:
-              err.message || "Some error occurred while removing all tutorials."
+              err.message || "Some error occurred while removing all Operations."
           });
         });
 };
 
-// Find all published Tutorials
+// Find all published Operations
 exports.findAllPublished = (req, res) => {
     Operations.findAll({ where: { published: true } })
     .then(data => {
@@ -138,7 +138,7 @@ exports.findAllPublished = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving tutorials."
+          err.message || "Some error occurred while retrieving Operations."
       });
     });
 };

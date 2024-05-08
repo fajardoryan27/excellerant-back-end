@@ -31,7 +31,7 @@ module.exports = function(sequelize, DataTypes) {
     underscored: true,
     indexes: [
       {
-        name: "PK__UserRole__93B92EBACC32D638",
+        name: "PK__UserRole__93B92EBAA45A606C",
         unique: true,
         fields: [
           { name: "user_role_prmsn_id" },

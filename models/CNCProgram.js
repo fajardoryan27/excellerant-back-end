@@ -27,12 +27,12 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
-        model: 'Head',
-        key: 'head_id'
+        model: 'MachineTypes',
+        key: 'machine_type_id'
       }
     },
     order: {
-      type: DataTypes.STRING(15),
+      type: DataTypes.STRING(255),
       allowNull: true
     },
     approval_requirements: {
@@ -44,7 +44,7 @@ module.exports = function(sequelize, DataTypes) {
       }
     },
     program_name: {
-      type: DataTypes.STRING(15),
+      type: DataTypes.STRING(255),
       allowNull: true
     },
     revision: {
@@ -63,7 +63,7 @@ module.exports = function(sequelize, DataTypes) {
     underscored: true,
     indexes: [
       {
-        name: "PK__CNCProgr__3A7890AC12462C57",
+        name: "PK__CNCProgr__3A7890AC5785B18A",
         unique: true,
         fields: [
           { name: "program_id" },

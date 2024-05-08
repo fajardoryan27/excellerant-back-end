@@ -8,11 +8,11 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true
     },
     head_name: {
-      type: DataTypes.STRING(15),
+      type: DataTypes.STRING(50),
       allowNull: false
     },
     destination: {
-      type: DataTypes.STRING(15),
+      type: DataTypes.STRING(50),
       allowNull: false
     }
   }, {
@@ -22,6 +22,13 @@ module.exports = function(sequelize, DataTypes) {
     timestamps: false,
     underscored: true,
     indexes: [
+      {
+        name: "PK__Head__D6BE0713352BAE72",
+        unique: true,
+        fields: [
+          { name: "head_id" },
+        ]
+      },
       {
         name: "PK__Head__D6BE0713C4934048",
         unique: true,

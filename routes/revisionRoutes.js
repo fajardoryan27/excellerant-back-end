@@ -2,25 +2,25 @@ module.exports = app => {
     const revisions = require("../controllers/revisionController.js");
     var router = require("express").Router();
   
-    // Create a new Tutorial
+    // Create a new Revision
     router.post("/", revisions.create);
   
-    // Retrieve all Tutorials
+    // Retrieve all Revisions
     router.get("/", revisions.findAll);
   
-    // Retrieve all published Tutorials
+    // Retrieve all published Revisions
     router.get("/published", revisions.findAllPublished);
   
-    // Retrieve a single Tutorial with id
+    // Retrieve a single Revision with id
     router.get("/:id", revisions.findOne);
   
-    // Update a Tutorial with id
+    // Update a Revision with id
     router.put("/:id", revisions.update);
   
-    // Delete a Tutorial with id
+    // Delete a Revision with id
     router.delete("/:id", revisions.delete);
   
-    // Delete all Tutorials
+    // Delete all Revisions
     router.delete("/", revisions.deleteAll);
   
     app.use('/api/revision', router);

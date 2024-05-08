@@ -1,5 +1,4 @@
 const db = require("../models");
-// const approvalList = require("../controllers/approvalListController.js");
 const Permission = db.permission;
 const Op = db.Sequelize.Op;
 exports.create = (req, res) => {
@@ -12,7 +11,7 @@ exports.create = (req, res) => {
         return;
     }
 
-      // Create a Tutorial
+      // Create a Permission
       const permission = {
         permission_name: req.body.permission_name,
         permission_desc: req.body.permission_desc
@@ -32,7 +31,7 @@ exports.create = (req, res) => {
         });
 };
 
-// Retrieve all Tutorials from the database.
+// Retrieve all Permissions from the database.
 exports.findAll = (req, res) => {
     const permission_name = req.query.permission_name;
     var condition = permission_name ? { permission_name: { [Op.like]: `%${permission_name}%` } } : null;
@@ -44,12 +43,12 @@ exports.findAll = (req, res) => {
       .catch(err => {
         res.status(500).send({
           message:
-            err.message || "Some error occurred while retrieving tutorials."
+            err.message || "Some error occurred while retrieving Permissions."
         });
       });
 };
 
-// Find a single Tutorial with an id
+// Find a single Permission with an id
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
@@ -59,12 +58,12 @@ exports.findOne = (req, res) => {
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error retrieving Tutorial with id=" + id
+          message: "Error retrieving Permission with id=" + id
         });
       });
 };
 
-// Update a Tutorial by the id in the request
+// Update a Permission by the id in the request
 exports.update = (req, res) => {
     const id = req.params.id;
     console.log(id)
@@ -74,22 +73,22 @@ exports.update = (req, res) => {
       .then(num => {
         if (num == 1) {
           res.send({
-            message: "Tutorial was updated successfully."
+            message: "Permission was updated successfully."
           });
         } else {
           res.send({
-            message: `Cannot update Tutorial with id=${id}. Maybe Tutorial was not found or req.body is empty!`
+            message: `Cannot update Permission with id=${id}. Maybe Permission was not found or req.body is empty!`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error updating Tutorial with id=" + id
+          message: "Error updating Permission with id=" + id
         });
       });
 };
 
-// Delete a Tutorial with the specified id in the request
+// Delete a Permission with the specified id in the request
 exports.delete = (req, res) => {
     const id = req.params.id;
 
@@ -99,39 +98,39 @@ exports.delete = (req, res) => {
       .then(num => {
         if (num == 1) {
           res.send({
-            message: "Tutorial was deleted successfully!"
+            message: "Permission was deleted successfully!"
           });
         } else {
           res.send({
-            message: `Cannot delete Tutorial with id=${id}. Maybe Tutorial was not found!`
+            message: `Cannot delete Permission with id=${id}. Maybe Permission was not found!`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Could not delete Tutorial with id=" + id
+          message: "Could not delete Permission with id=" + id
         });
       });
 };
 
-// Delete all Tutorials from the database.
+// Delete all Permissions from the database.
 exports.deleteAll = (req, res) => {
     Permission.destroy({
         where: {},
         truncate: false
       })
         .then(nums => {
-          res.send({ message: `${nums} Tutorials were deleted successfully!` });
+          res.send({ message: `${nums} Permissions were deleted successfully!` });
         })
         .catch(err => {
           res.status(500).send({
             message:
-              err.message || "Some error occurred while removing all tutorials."
+              err.message || "Some error occurred while removing all Permissions."
           });
         });
 };
 
-// Find all published Tutorials
+// Find all published Permissions
 exports.findAllPublished = (req, res) => {
     Permission.findAll({ where: { published: true } })
     .then(data => {
@@ -140,7 +139,7 @@ exports.findAllPublished = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving tutorials."
+          err.message || "Some error occurred while retrieving Permissions."
       });
     });
 };

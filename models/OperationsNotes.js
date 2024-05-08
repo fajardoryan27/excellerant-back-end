@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('OperationsMachineTypes', {
-    operations_machine_types_id: {
+  return sequelize.define('OperationsNotes', {
+    op_notes_id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -15,26 +15,34 @@ module.exports = function(sequelize, DataTypes) {
         key: 'operations_id'
       }
     },
-    machine_type_id: {
+    date_added: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
+    note_details: {
+      type: DataTypes.STRING(255),
+      allowNull: true
+    },
+    user_id: {
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
-        model: 'MachineTypes',
-        key: 'machine_type_id'
+        model: 'User',
+        key: 'user_id'
       }
     }
   }, {
     sequelize,
-    tableName: 'OperationsMachineTypes',
+    tableName: 'OperationsNotes',
     schema: 'dbo',
     timestamps: false,
     underscored: true,
     indexes: [
       {
-        name: "PK__Operatio__9B63027745C8F3E5",
+        name: "PK__Operatio__A84547CEE52726FA",
         unique: true,
         fields: [
-          { name: "operations_machine_types_id" },
+          { name: "op_notes_id" },
         ]
       },
     ]

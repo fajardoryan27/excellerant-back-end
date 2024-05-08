@@ -1,4 +1,3 @@
-'use strict';
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('SendHistory', {
@@ -60,7 +59,7 @@ module.exports = function(sequelize, DataTypes) {
     underscored: true,
     indexes: [
       {
-        name: "PK__SendHist__E794FE7DA74B32AC",
+        name: "PK__SendHist__E794FE7DD1B681F8",
         unique: true,
         fields: [
           { name: "send_id" },

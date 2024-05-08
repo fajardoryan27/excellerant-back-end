@@ -1,5 +1,4 @@
 const db = require("../models");
-// const approvalList = require("../controllers/approvalListController.js");
 const Head = db.head;
 const Op = db.Sequelize.Op;
 exports.create = (req, res) => {
@@ -12,7 +11,7 @@ exports.create = (req, res) => {
         return;
       }
 
-      // Create a Tutorial
+      // Create a Head
       const head = {
         head_name: req.body.head_name,
         destination: req.body.destination,
@@ -50,7 +49,7 @@ exports.findAll = (req, res) => {
       });
 };
 
-// Find a single Tutorial with an id
+// Find a single Head with an id
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
@@ -60,12 +59,12 @@ exports.findOne = (req, res) => {
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error retrieving Tutorial with id=" + id
+          message: "Error retrieving Head with id=" + id
         });
       });
 };
 
-// Update a Tutorial by the id in the request
+// Update a Head by the id in the request
 exports.update = (req, res) => {
     const id = req.params.id;
     console.log(id)
@@ -75,22 +74,22 @@ exports.update = (req, res) => {
       .then(num => {
         if (num == 1) {
           res.send({
-            message: "Tutorial was updated successfully."
+            message: "Head was updated successfully."
           });
         } else {
           res.send({
-            message: `Cannot update Tutorial with id=${id}. Maybe Tutorial was not found or req.body is empty!`
+            message: `Cannot update Head with id=${id}. Maybe Head was not found or req.body is empty!`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error updating Tutorial with id=" + id
+          message: "Error updating Head with id=" + id
         });
       });
 };
 
-// Delete a Tutorial with the specified id in the request
+// Delete a Head with the specified id in the request
 exports.delete = (req, res) => {
     const id = req.params.id;
 
@@ -100,17 +99,17 @@ exports.delete = (req, res) => {
       .then(num => {
         if (num == 1) {
           res.send({
-            message: "Tutorial was deleted successfully!"
+            message: "Head was deleted successfully!"
           });
         } else {
           res.send({
-            message: `Cannot delete Tutorial with id=${id}. Maybe Tutorial was not found!`
+            message: `Cannot delete Head with id=${id}. Maybe Head was not found!`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Could not delete Tutorial with id=" + id
+          message: "Could not delete Head with id=" + id
         });
       });
 };

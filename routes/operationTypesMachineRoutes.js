@@ -2,25 +2,25 @@ module.exports = app => {
     const operationTypeMach = require("../controllers/operationTypesMachineController.js");
     var router = require("express").Router();
   
-    // Create a new Tutorial
+    // Create a new Operation Type
     router.post("/", operationTypeMach.create);
   
-    // Retrieve all Tutorials
+    // Retrieve all Operation Types
     router.get("/", operationTypeMach.findAll);
   
-    // Retrieve all published Tutorials
+    // Retrieve all published Operation Types
     router.get("/published", operationTypeMach.findAllPublished);
   
-    // Retrieve a single Tutorial with id
+    // Retrieve a single Operation Type with id
     router.get("/:id", operationTypeMach.findOne);
   
-    // Update a Tutorial with id
+    // Update a Operation Type with id
     router.put("/:id", operationTypeMach.update);
   
-    // Delete a Tutorial with id
+    // Delete a Operation Type with id
     router.delete("/:id", operationTypeMach.delete);
   
-    // Delete all Tutorials
+    // Delete all Operation Types
     router.delete("/", operationTypeMach.deleteAll);
   
     app.use('/api/operation-machine-types', router);

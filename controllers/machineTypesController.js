@@ -11,7 +11,7 @@ exports.create = (req, res) => {
         return;
       }
 
-      // Create a Tutorial
+      // Create a Machine Types
       const machineTypes = {
         machine_type_name: req.body.machine_type_name,
         
@@ -31,7 +31,7 @@ exports.create = (req, res) => {
         });
 };
 
-// Retrieve all Tutorials from the database.
+// Retrieve all Machine Types from the database.
 exports.findAll = (req, res) => {
     const machine_type_name = req.query.machine_type_name;
     var condition = machine_type_name ? { machine_type_name: { [Op.like]: `%${machine_type_name}%` } } : null;
@@ -43,12 +43,12 @@ exports.findAll = (req, res) => {
       .catch(err => {
         res.status(500).send({
           message:
-            err.message || "Some error occurred while retrieving tutorials."
+            err.message || "Some error occurred while retrieving Machine Types."
         });
       });
 };
 
-// Find a single Tutorial with an id
+// Find a single Machine Types with an id
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
@@ -58,12 +58,12 @@ exports.findOne = (req, res) => {
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error retrieving Tutorial with id=" + id
+          message: "Error retrieving Machine Types with id=" + id
         });
       });
 };
 
-// Update a Tutorial by the id in the request
+// Update a Machine Types by the id in the request
 exports.update = (req, res) => {
     const id = req.params.id;
     console.log(id)
@@ -73,22 +73,22 @@ exports.update = (req, res) => {
       .then(num => {
         if (num == 1) {
           res.send({
-            message: "Tutorial was updated successfully."
+            message: "Machine Types was updated successfully."
           });
         } else {
           res.send({
-            message: `Cannot update Tutorial with id=${id}. Maybe Tutorial was not found or req.body is empty!`
+            message: `Cannot update Machine Types with id=${id}. Maybe Machine Types was not found or req.body is empty!`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error updating Tutorial with id=" + id
+          message: "Error updating Machine Types with id=" + id
         });
       });
 };
 
-// Delete a Tutorial with the specified id in the request
+// Delete a Machine Types with the specified id in the request
 exports.delete = (req, res) => {
     const id = req.params.id;
 
@@ -98,39 +98,39 @@ exports.delete = (req, res) => {
       .then(num => {
         if (num == 1) {
           res.send({
-            message: "Tutorial was deleted successfully!"
+            message: "Machine Types was deleted successfully!"
           });
         } else {
           res.send({
-            message: `Cannot delete Tutorial with id=${id}. Maybe Tutorial was not found!`
+            message: `Cannot delete Machine Types with id=${id}. Maybe Machine Types was not found!`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Could not delete Tutorial with id=" + id
+          message: "Could not delete Machine Types with id=" + id
         });
       });
 };
 
-// Delete all Tutorials from the database.
+// Delete all Machine Types from the database.
 exports.deleteAll = (req, res) => {
     MachineTypes.destroy({
         where: {},
         truncate: false
       })
         .then(nums => {
-          res.send({ message: `${nums} Tutorials were deleted successfully!` });
+          res.send({ message: `${nums} Machine Types were deleted successfully!` });
         })
         .catch(err => {
           res.status(500).send({
             message:
-              err.message || "Some error occurred while removing all tutorials."
+              err.message || "Some error occurred while removing all Machine Types."
           });
         });
 };
 
-// Find all published Tutorials
+// Find all published Machine Types
 exports.findAllPublished = (req, res) => {
     MachineTypes.findAll({ where: { published: true } })
     .then(data => {
@@ -139,7 +139,7 @@ exports.findAllPublished = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving tutorials."
+          err.message || "Some error occurred while retrieving Machine Types."
       });
     });
 };

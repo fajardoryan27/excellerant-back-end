@@ -1,40 +1,48 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('OperationsMachineTypes', {
-    operations_machine_types_id: {
+  return sequelize.define('PartNotes', {
+    part_notes_id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    operations_id: {
+    part_id: {
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
-        model: 'Operations',
-        key: 'operations_id'
+        model: 'Parts',
+        key: 'part_id'
       }
     },
-    machine_type_id: {
+    date_added: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    note_details: {
+      type: DataTypes.STRING(255),
+      allowNull: true
+    },
+    user_id: {
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
-        model: 'MachineTypes',
-        key: 'machine_type_id'
+        model: 'User',
+        key: 'user_id'
       }
     }
   }, {
     sequelize,
-    tableName: 'OperationsMachineTypes',
+    tableName: 'PartNotes',
     schema: 'dbo',
     timestamps: false,
     underscored: true,
     indexes: [
       {
-        name: "PK__Operatio__9B63027745C8F3E5",
+        name: "PK__PartNote__1CA6105F7A68D8DD",
         unique: true,
         fields: [
-          { name: "operations_machine_types_id" },
+          { name: "part_notes_id" },
         ]
       },
     ]
