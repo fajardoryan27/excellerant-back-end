@@ -1,4 +1,5 @@
 const db = require("../models");
+const sql = require("mssql");
 const Operations = db.operations;
 const Op = db.Sequelize.Op;
 exports.create = (req, res) => {
@@ -141,4 +142,50 @@ exports.findAllPublished = (req, res) => {
           err.message || "Some error occurred while retrieving Operations."
       });
     });
+};
+
+
+// SQL Server configuration
+var config = {
+  "user": "sa", // Database username
+  "password": "p@ssw0rd", // Database password
+  "server": "localhost", // Server IP address
+  "database": "nexaDB", // Database name
+  "options": {
+      "encrypt": false // Disable encryption
+  }
+}
+
+// Connect to SQL Server
+sql.connect(config, err => {
+  if (err) {
+      throw err;
+  }
+  console.log("Connection Successful!");
+});
+
+exports.get_all_op_per_part = (req, res) => {
+  const part_name = req.query.part_name;
+  console.log(part_name)
+  // var condition = part_id ? { part_id: { [Op.like]: `%${part_id}%` } } : null;
+  new sql.Request().query(" select Operations.operations_id,Parts.part_name,Operations.part_id,Operations.operation_name,Operations.type FROM Operations"+
+ " inner join Parts on Parts.part_id = Operations.part_id where Parts.part_name = "+"'"+part_name+"'", (err, result) => {
+    if (err) {
+        console.error("Error executing query:", err);
+    } else {
+        res.send(result.recordset); // Send query result as response
+        console.dir(result.recordset);
+    }
+});
+
+  // Operations.findAll({ where: condition })
+  //   .then(data => {
+  //     res.send(data);
+  //   })
+  //   .catch(err => {
+  //     res.status(500).send({
+  //       message:
+  //         err.message || "Some error occurred while retrieving Operations."
+  //     });
+  //   });
 };

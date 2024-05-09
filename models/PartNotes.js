@@ -20,7 +20,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     note_details: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.TEXT,
       allowNull: true
     },
     user_id: {
@@ -39,7 +39,7 @@ module.exports = function(sequelize, DataTypes) {
     underscored: true,
     indexes: [
       {
-        name: "PK__PartNote__1CA6105F7A68D8DD",
+        name: "PK__PartNote__1CA6105F74CE1443",
         unique: true,
         fields: [
           { name: "part_notes_id" },

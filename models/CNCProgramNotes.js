@@ -1,32 +1,40 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('UserRoles', {
-    role_id: {
+  return sequelize.define('CNCProgramNotes', {
+    note_id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    role_name: {
-      type: DataTypes.STRING(255),
+    note_added: {
+      type: DataTypes.DATE,
       allowNull: true
     },
-    role_desc: {
-      type: DataTypes.STRING(255),
+    note_details: {
+      type: DataTypes.TEXT,
       allowNull: true
+    },
+    note_creator: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'User',
+        key: 'user_id'
+      }
     }
   }, {
     sequelize,
-    tableName: 'UserRoles',
+    tableName: 'CNCProgramNotes',
     schema: 'dbo',
     timestamps: false,
     underscored: true,
     indexes: [
       {
-        name: "PK__UserRole__760965CCBC13EF1F",
+        name: "PK__CNCProgr__CEDD0FA40E12D9B2",
         unique: true,
         fields: [
-          { name: "role_id" },
+          { name: "note_id" },
         ]
       },
     ]

@@ -1,11 +1,19 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('MachineDLStatUserRoles', {
-    machine_stat_user_role_id: {
+  return sequelize.define('RolesPermission', {
+    id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
+    },
+    permission_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'Permissions',
+        key: 'permission_id'
+      }
     },
     role_id: {
       type: DataTypes.INTEGER,
@@ -14,31 +22,19 @@ module.exports = function(sequelize, DataTypes) {
         model: 'UserRoles',
         key: 'role_id'
       }
-    },
-    part_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'Parts',
-        key: 'part_id'
-      }
-    },
-    required_num_users: {
-      type: DataTypes.INTEGER,
-      allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'MachineDLStatUserRoles',
+    tableName: 'RolesPermission',
     schema: 'dbo',
     timestamps: false,
     underscored: true,
     indexes: [
       {
-        name: "PK__MachineD__0EADEE716656C093",
+        name: "PK__RolesPer__3213E83F9A3449F3",
         unique: true,
         fields: [
-          { name: "machine_stat_user_role_id" },
+          { name: "id" },
         ]
       },
     ]

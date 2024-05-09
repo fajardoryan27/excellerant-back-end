@@ -39,7 +39,7 @@ module.exports = function(sequelize, DataTypes) {
     underscored: true,
     indexes: [
       {
-        name: "PK__PartsPro__9CED6FC8180182D8",
+        name: "PK__PartsPro__9CED6FC862E48850",
         unique: true,
         fields: [
           { name: "prod_stat_user_roles_id" },

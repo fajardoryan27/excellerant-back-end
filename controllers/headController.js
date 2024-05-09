@@ -1,6 +1,19 @@
 const db = require("../models");
 const Head = db.head;
 const Op = db.Sequelize.Op;
+
+const sql = require("mssql");
+
+// SQL Server configuration
+var config = {
+  "user": "sa", // Database username
+  "password": "p@ssw0rd", // Database password
+  "server": "localhost", // Server IP address
+  "database": "nexaDB", // Database name
+  "options": {
+      "encrypt": false // Disable encryption
+  }
+}
 exports.create = (req, res) => {
     console.log(req.body)
     console.log(req.body.head_name)
@@ -14,11 +27,9 @@ exports.create = (req, res) => {
       // Create a Head
       const head = {
         head_name: req.body.head_name,
-        destination: req.body.destination,
-       
+        machine_id:req.body.machine_id,
       };
 
-      console.log(head)
     
       Head.create(head)
         .then(data => {
@@ -30,6 +41,32 @@ exports.create = (req, res) => {
               console.log(err.message) 
           });
         });
+};
+
+exports.getMachineWithHead = (req, res) => {
+  const head_name = req.query.head_name;
+  var condition = head_name ? { head_name: { [Op.like]: `%${head_name}%` } } : null;
+  new sql.Request().query(" select Operations.operations_id,Parts.part_name,Operations.part_id,Operations.operation_name,Operations.type FROM Operations"+
+ " inner join Parts on Parts.part_id = Operations.part_id where Parts.part_name = "+"'"+part_name+"'", (err, result) => {
+    if (err) {
+        console.error("Error executing query:", err);
+    } else {
+        res.send(result.recordset); // Send query result as response
+        console.dir(result.recordset);
+    }
+});
+
+  
+  // Head.findAll({ where: condition })
+  //   .then(data => {
+  //     res.send(data);
+  //   })
+  //   .catch(err => {
+  //     res.status(500).send({
+  //       message:
+  //         err.message || "Some error occurred while retrieving tutorials."
+  //     });
+  //   });
 };
 
 // Retrieve all Tutorials from the database.

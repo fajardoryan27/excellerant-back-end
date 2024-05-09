@@ -37,8 +37,8 @@ exports.create = (req, res) => {
 
 // Retrieve all Parts from the database.
 exports.findAll = (req, res) => {
-    const PartName = req.query.part_name;
-    var condition = PartName ? { PartName: { [Op.like]: `%${PartName}%` } } : null;
+    const part_name = req.query.part_name;
+    var condition = part_name ? { part_name: { [Op.like]: `%${part_name}%` } } : null;
   
     Parts.findAll({ where: condition })
       .then(data => {

@@ -1,6 +1,9 @@
 var DataTypes = require("sequelize").DataTypes;
 var _ApprovalList = require("./ApprovalList");
+var _CNCProdAssocRoles = require("./CNCProdAssocRoles");
 var _CNCProgram = require("./CNCProgram");
+var _CNCProgramNotes = require("./CNCProgramNotes");
+var _CNCRevisionListing = require("./CNCRevisionListing");
 var _MachineDLStatUserRoles = require("./MachineDLStatUserRoles");
 var _MachineHeadAssoc = require("./MachineHeadAssoc");
 var _MachineTypes = require("./MachineTypes");
@@ -15,6 +18,8 @@ var _PartsDocumentAssociation = require("./PartsDocumentAssociation");
 var _PartsProdUserRoles = require("./PartsProdUserRoles");
 var _Permissions = require("./Permissions");
 var _Revision = require("./Revision");
+var _Roles = require("./Roles");
+var _RolesPermission = require("./RolesPermission");
 var _SendHistory = require("./SendHistory");
 var _Status = require("./Status");
 var _User = require("./User");
@@ -23,7 +28,10 @@ var _UserRolesPermission = require("./UserRolesPermission");
 
 function initModels(sequelize) {
   var ApprovalList = _ApprovalList(sequelize, DataTypes);
+  var CNCProdAssocRoles = _CNCProdAssocRoles(sequelize, DataTypes);
   var CNCProgram = _CNCProgram(sequelize, DataTypes);
+  var CNCProgramNotes = _CNCProgramNotes(sequelize, DataTypes);
+  var CNCRevisionListing = _CNCRevisionListing(sequelize, DataTypes);
   var MachineDLStatUserRoles = _MachineDLStatUserRoles(sequelize, DataTypes);
   var MachineHeadAssoc = _MachineHeadAssoc(sequelize, DataTypes);
   var MachineTypes = _MachineTypes(sequelize, DataTypes);
@@ -38,26 +46,32 @@ function initModels(sequelize) {
   var PartsProdUserRoles = _PartsProdUserRoles(sequelize, DataTypes);
   var Permissions = _Permissions(sequelize, DataTypes);
   var Revision = _Revision(sequelize, DataTypes);
+  var Roles = _Roles(sequelize, DataTypes);
+  var RolesPermission = _RolesPermission(sequelize, DataTypes);
   var SendHistory = _SendHistory(sequelize, DataTypes);
   var Status = _Status(sequelize, DataTypes);
   var User = _User(sequelize, DataTypes);
   var UserRoles = _UserRoles(sequelize, DataTypes);
   var UserRolesPermission = _UserRolesPermission(sequelize, DataTypes);
 
+  CNCProdAssocRoles.belongsTo(CNCProgram, { as: "program", foreignKey: "program_id"});
+  CNCProgram.hasMany(CNCProdAssocRoles, { as: "CNCProdAssocRoles", foreignKey: "program_id"});
   SendHistory.belongsTo(CNCProgram, { as: "program", foreignKey: "program_id"});
   CNCProgram.hasMany(SendHistory, { as: "SendHistories", foreignKey: "program_id"});
-  CNCProgram.belongsTo(MachineTypes, { as: "head", foreignKey: "head_id"});
-  MachineTypes.hasMany(CNCProgram, { as: "CNCPrograms", foreignKey: "head_id"});
+  CNCProgram.belongsTo(MachineHeadAssoc, { as: "head", foreignKey: "head_id"});
+  MachineHeadAssoc.hasMany(CNCProgram, { as: "CNCPrograms", foreignKey: "head_id"});
   MachineTypesMemberAssoc.belongsTo(MachineTypes, { as: "machine_type", foreignKey: "machine_type_id"});
   MachineTypes.hasMany(MachineTypesMemberAssoc, { as: "MachineTypesMemberAssocs", foreignKey: "machine_type_id"});
+  Machines.belongsTo(MachineTypes, { as: "machine_type", foreignKey: "machine_type_id"});
+  MachineTypes.hasMany(Machines, { as: "Machines", foreignKey: "machine_type_id"});
   OperationsMachineTypes.belongsTo(MachineTypes, { as: "machine_type", foreignKey: "machine_type_id"});
   MachineTypes.hasMany(OperationsMachineTypes, { as: "OperationsMachineTypes", foreignKey: "machine_type_id"});
   MachineHeadAssoc.belongsTo(Machines, { as: "machine", foreignKey: "machine_id"});
   Machines.hasMany(MachineHeadAssoc, { as: "MachineHeadAssocs", foreignKey: "machine_id"});
   MachineTypesMemberAssoc.belongsTo(Machines, { as: "machine", foreignKey: "machine_id"});
   Machines.hasMany(MachineTypesMemberAssoc, { as: "MachineTypesMemberAssocs", foreignKey: "machine_id"});
-  CNCProgram.belongsTo(Operations, { as: "operation", foreignKey: "operation_id"});
-  Operations.hasMany(CNCProgram, { as: "CNCPrograms", foreignKey: "operation_id"});
+  CNCProgram.belongsTo(Operations, { as: "machine_type", foreignKey: "machine_type_id"});
+  Operations.hasMany(CNCProgram, { as: "CNCPrograms", foreignKey: "machine_type_id"});
   OperationsMachineTypes.belongsTo(Operations, { as: "operation", foreignKey: "operations_id"});
   Operations.hasMany(OperationsMachineTypes, { as: "OperationsMachineTypes", foreignKey: "operations_id"});
   OperationsNotes.belongsTo(Operations, { as: "operation", foreignKey: "operations_id"});
@@ -74,6 +88,8 @@ function initModels(sequelize) {
   Parts.hasMany(PartsDocumentAssociation, { as: "PartsDocumentAssociations", foreignKey: "part_id"});
   PartsProdUserRoles.belongsTo(Parts, { as: "part", foreignKey: "part_id"});
   Parts.hasMany(PartsProdUserRoles, { as: "PartsProdUserRoles", foreignKey: "part_id"});
+  RolesPermission.belongsTo(Permissions, { as: "permission", foreignKey: "permission_id"});
+  Permissions.hasMany(RolesPermission, { as: "RolesPermissions", foreignKey: "permission_id"});
   UserRolesPermission.belongsTo(Permissions, { as: "permission", foreignKey: "permission_id"});
   Permissions.hasMany(UserRolesPermission, { as: "UserRolesPermissions", foreignKey: "permission_id"});
   CNCProgram.belongsTo(Revision, { as: "revision_Revision", foreignKey: "revision"});
@@ -82,6 +98,10 @@ function initModels(sequelize) {
   Revision.hasMany(SendHistory, { as: "SendHistories", foreignKey: "revision_id"});
   CNCProgram.belongsTo(Status, { as: "approval_requirements_Status", foreignKey: "approval_requirements"});
   Status.hasMany(CNCProgram, { as: "CNCPrograms", foreignKey: "approval_requirements"});
+  CNCProgramNotes.belongsTo(User, { as: "note_creator_User", foreignKey: "note_creator"});
+  User.hasMany(CNCProgramNotes, { as: "CNCProgramNotes", foreignKey: "note_creator"});
+  CNCRevisionListing.belongsTo(User, { as: "revision_by_User", foreignKey: "revision_by"});
+  User.hasMany(CNCRevisionListing, { as: "CNCRevisionListings", foreignKey: "revision_by"});
   OperationsNotes.belongsTo(User, { as: "user", foreignKey: "user_id"});
   User.hasMany(OperationsNotes, { as: "OperationsNotes", foreignKey: "user_id"});
   PartNotes.belongsTo(User, { as: "user", foreignKey: "user_id"});
@@ -100,6 +120,8 @@ function initModels(sequelize) {
   UserRoles.hasMany(MachineDLStatUserRoles, { as: "MachineDLStatUserRoles", foreignKey: "role_id"});
   PartsProdUserRoles.belongsTo(UserRoles, { as: "role", foreignKey: "role_id"});
   UserRoles.hasMany(PartsProdUserRoles, { as: "PartsProdUserRoles", foreignKey: "role_id"});
+  RolesPermission.belongsTo(UserRoles, { as: "role", foreignKey: "role_id"});
+  UserRoles.hasMany(RolesPermission, { as: "RolesPermissions", foreignKey: "role_id"});
   User.belongsTo(UserRoles, { as: "role", foreignKey: "role_id"});
   UserRoles.hasMany(User, { as: "Users", foreignKey: "role_id"});
   UserRolesPermission.belongsTo(UserRoles, { as: "role", foreignKey: "role_id"});
@@ -107,7 +129,10 @@ function initModels(sequelize) {
 
   return {
     ApprovalList,
+    CNCProdAssocRoles,
     CNCProgram,
+    CNCProgramNotes,
+    CNCRevisionListing,
     MachineDLStatUserRoles,
     MachineHeadAssoc,
     MachineTypes,
@@ -122,6 +147,8 @@ function initModels(sequelize) {
     PartsProdUserRoles,
     Permissions,
     Revision,
+    Roles,
+    RolesPermission,
     SendHistory,
     Status,
     User,

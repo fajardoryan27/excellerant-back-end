@@ -14,9 +14,9 @@ exports.create = (req, res) => {
       // Create a Machine
       const machine = {
         machine_name: req.body.machine_name,
+        machine_type_id: req.body.machine_type_id,
         number_of_heads: req.body.number_of_heads,
-        head_id: req.body.head_id,
-        details: req.body.details,
+        machine_description:req.body.machine_description
       };
 
       console.log(machine)

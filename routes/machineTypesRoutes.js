@@ -4,10 +4,11 @@ module.exports = app => {
   
     // Create a new Machine Type
     router.post("/", parts.create);
-  
+
     // Retrieve all Machine Types
     router.get("/", parts.findAll);
-  
+    router.get("/ ", parts.getMachineTypeMachines);
+    router.get("/machines/all", parts.getAllMachineTypeMachines);
     // Retrieve all published Machine Types
     router.get("/published", parts.findAllPublished);
   

@@ -7,7 +7,7 @@ module.exports = app => {
   
     // Retrieve all Operations
     router.get("/", parts.findAll);
-  
+    router.get("/parts/operations/", parts.get_all_op_per_part);
     // Retrieve all published Operations
     router.get("/published", parts.findAllPublished);
   
@@ -22,6 +22,8 @@ module.exports = app => {
   
     // Delete all Operations
     router.delete("/", parts.deleteAll);
-  
+    
+    
+
     app.use('/api/operations', router);
   };

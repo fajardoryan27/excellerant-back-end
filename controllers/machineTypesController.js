@@ -1,6 +1,26 @@
 const db = require("../models");
 const MachineTypes = db.machineTypes;
 const Op = db.Sequelize.Op;
+const sql = require("mssql");
+
+// SQL Server configuration
+var config = {
+  "user": "sa", // Database username
+  "password": "p@ssw0rd", // Database password
+  "server": "localhost", // Server IP address
+  "database": "nexaDB", // Database name
+  "options": {
+      "encrypt": false // Disable encryption
+  }
+}
+
+// Connect to SQL Server
+sql.connect(config, err => {
+  if (err) {
+      throw err;
+  }
+  console.log("Connection Successful!");
+});
 exports.create = (req, res) => {
     console.log(req.body)
     console.log(req.body.machine_type_name)
@@ -14,7 +34,7 @@ exports.create = (req, res) => {
       // Create a Machine Types
       const machineTypes = {
         machine_type_name: req.body.machine_type_name,
-        
+        machine_type_desc:req.body.machine_type_desc
       };
 
       console.log(machineTypes)
@@ -29,6 +49,36 @@ exports.create = (req, res) => {
               console.log(err.message) 
           });
         });
+};
+
+exports.getAllMachineTypeMachines = (req, res) => {
+  const machine_type_name = req.query.machine_type_name;
+  var condition = machine_type_name ? { machine_type_name: { [Op.like]: `%${machine_type_name}%` } } : null;
+
+  new sql.Request().query("  select MachineTypes.machine_type_id,MachineTypes.machine_type_name,Machines.machine_name,MachineTypes.machine_type_desc from MachineTypes "+
+  "inner join Machines on Machines.machine_type_id = MachineTypes.machine_type_id", (err, result) => {
+    if (err) {
+        console.error("Error executing query:", err);
+    } else {
+        res.send(result.recordset); // Send query result as response
+        console.dir(result.recordset);
+    }
+});
+};
+
+exports.getMachineTypeMachines = (req, res) => {
+  const machine_type_name = req.query.machine_type_name;
+  var condition = machine_type_name ? { machine_type_name: { [Op.like]: `%${machine_type_name}%` } } : null;
+
+  new sql.Request().query("  select MachineTypes.machine_type_id,MachineTypes.machine_type_name,Machines.machine_name,MachineTypes.machine_type_desc from MachineTypes "+
+  "inner join Machines on Machines.machine_type_id = MachineTypes.machine_type_id where MachineTypes.machine_type_name = "+"'"+machine_type_name+"'", (err, result) => {
+    if (err) {
+        console.error("Error executing query:", err);
+    } else {
+        res.send(result.recordset); // Send query result as response
+        console.dir(result.recordset);
+    }
+});
 };
 
 // Retrieve all Machine Types from the database.

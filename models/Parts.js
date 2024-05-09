@@ -12,7 +12,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     description: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.TEXT,
       allowNull: true
     },
     itar_restricted: {
@@ -31,7 +31,7 @@ module.exports = function(sequelize, DataTypes) {
     underscored: true,
     indexes: [
       {
-        name: "PK__Parts__A0E3FAB82287E5C1",
+        name: "PK__Parts__A0E3FAB8441053E5",
         unique: true,
         fields: [
           { name: "part_id" },

@@ -27,7 +27,7 @@ module.exports = function(sequelize, DataTypes) {
     underscored: true,
     indexes: [
       {
-        name: "PK__Approval__C94AE61A71AC36F9",
+        name: "PK__Approval__C94AE61A6BB78FD4",
         unique: true,
         fields: [
           { name: "approval_id" },

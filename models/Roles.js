@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('UserRoles', {
+  return sequelize.define('Roles', {
     role_id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
@@ -17,13 +17,13 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'UserRoles',
+    tableName: 'Roles',
     schema: 'dbo',
     timestamps: false,
     underscored: true,
     indexes: [
       {
-        name: "PK__UserRole__760965CCBC13EF1F",
+        name: "PK__Roles__760965CCA38D8FB1",
         unique: true,
         fields: [
           { name: "role_id" },

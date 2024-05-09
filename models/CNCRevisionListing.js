@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('Revision', {
+  return sequelize.define('CNCRevisionListing', {
     revision_id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
@@ -11,19 +11,15 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(255),
       allowNull: true
     },
-    created_by: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'User',
-        key: 'user_id'
-      }
-    },
     creation_date: {
       type: DataTypes.DATE,
       allowNull: true
     },
-    revised_by: {
+    rev_date: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    revision_by: {
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
@@ -31,31 +27,27 @@ module.exports = function(sequelize, DataTypes) {
         key: 'user_id'
       }
     },
-    revision_date: {
-      type: DataTypes.DATE,
-      allowNull: true
-    },
-    revision_comment: {
+    revision_notes: {
       type: DataTypes.STRING(255),
       allowNull: true
     },
-    database_path: {
+    previous_file: {
       type: DataTypes.STRING(255),
       allowNull: true
     },
-    status: {
-      type: DataTypes.INTEGER,
+    updated_file: {
+      type: DataTypes.STRING(255),
       allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'Revision',
+    tableName: 'CNCRevisionListing',
     schema: 'dbo',
     timestamps: false,
     underscored: true,
     indexes: [
       {
-        name: "PK__Revision__03BAF005F24704F1",
+        name: "PK__CNCRevis__03BAF005477C521C",
         unique: true,
         fields: [
           { name: "revision_id" },

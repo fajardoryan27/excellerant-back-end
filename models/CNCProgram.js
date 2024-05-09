@@ -17,6 +17,10 @@ module.exports = function(sequelize, DataTypes) {
     },
     operation_id: {
       type: DataTypes.INTEGER,
+      allowNull: true
+    },
+    machine_type_id: {
+      type: DataTypes.INTEGER,
       allowNull: true,
       references: {
         model: 'Operations',
@@ -27,8 +31,8 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
-        model: 'MachineTypes',
-        key: 'machine_type_id'
+        model: 'MachineHeadAssoc',
+        key: 'head_id'
       }
     },
     order: {
@@ -63,7 +67,7 @@ module.exports = function(sequelize, DataTypes) {
     underscored: true,
     indexes: [
       {
-        name: "PK__CNCProgr__3A7890AC5785B18A",
+        name: "PK__CNCProgr__3A7890ACD9AB8D5E",
         unique: true,
         fields: [
           { name: "program_id" },
