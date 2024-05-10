@@ -19,7 +19,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
-        model: 'Revision',
+        model: 'CNCRevisionListing',
         key: 'revision_id'
       }
     },
@@ -59,7 +59,7 @@ module.exports = function(sequelize, DataTypes) {
     underscored: true,
     indexes: [
       {
-        name: "PK__SendHist__E794FE7DA23BBE41",
+        name: "PK__SendHist__E794FE7D8A9E4DB9",
         unique: true,
         fields: [
           { name: "send_id" },

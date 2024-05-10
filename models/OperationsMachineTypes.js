@@ -31,7 +31,7 @@ module.exports = function(sequelize, DataTypes) {
     underscored: true,
     indexes: [
       {
-        name: "PK__Operatio__9B630277937227F9",
+        name: "PK__Operatio__9B63027754A3DEFF",
         unique: true,
         fields: [
           { name: "operations_machine_types_id" },

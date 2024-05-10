@@ -19,16 +19,16 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
-        model: 'UserRoles',
+        model: 'Roles',
         key: 'role_id'
       }
     },
-    required_num_users: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    },
     part_authorization_type: {
       type: DataTypes.STRING(255),
+      allowNull: true
+    },
+    required_num_users: {
+      type: DataTypes.INTEGER,
       allowNull: true
     }
   }, {
@@ -39,7 +39,7 @@ module.exports = function(sequelize, DataTypes) {
     underscored: true,
     indexes: [
       {
-        name: "PK__PartsPro__9CED6FC862E48850",
+        name: "PK__PartsPro__9CED6FC87B062451",
         unique: true,
         fields: [
           { name: "prod_stat_user_roles_id" },

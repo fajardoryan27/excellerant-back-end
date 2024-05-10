@@ -19,12 +19,12 @@ module.exports = function(sequelize, DataTypes) {
         key: 'machine_type_id'
       }
     },
-    number_of_heads: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    },
     machine_description: {
       type: DataTypes.TEXT,
+      allowNull: true
+    },
+    number_of_heads: {
+      type: DataTypes.INTEGER,
       allowNull: true
     }
   }, {
@@ -35,7 +35,7 @@ module.exports = function(sequelize, DataTypes) {
     underscored: true,
     indexes: [
       {
-        name: "PK__Machines__7B75BEA934DE3617",
+        name: "PK__Machines__7B75BEA9B5970AB8",
         unique: true,
         fields: [
           { name: "machine_id" },

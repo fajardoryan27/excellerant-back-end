@@ -7,10 +7,6 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true
     },
-    head_name: {
-      type: DataTypes.STRING(255),
-      allowNull: true
-    },
     machine_id: {
       type: DataTypes.INTEGER,
       allowNull: true,
@@ -18,6 +14,10 @@ module.exports = function(sequelize, DataTypes) {
         model: 'Machines',
         key: 'machine_id'
       }
+    },
+    head_name: {
+      type: DataTypes.STRING(255),
+      allowNull: true
     }
   }, {
     sequelize,
@@ -27,7 +27,7 @@ module.exports = function(sequelize, DataTypes) {
     underscored: true,
     indexes: [
       {
-        name: "PK__MachineH__D6BE071398D81966",
+        name: "PK__MachineH__D6BE0713CE8B3FAC",
         unique: true,
         fields: [
           { name: "head_id" },

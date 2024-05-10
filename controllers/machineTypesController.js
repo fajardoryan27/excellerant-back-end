@@ -2,25 +2,25 @@ const db = require("../models");
 const MachineTypes = db.machineTypes;
 const Op = db.Sequelize.Op;
 const sql = require("mssql");
-
+const sqlConnect = require('../database')
 // SQL Server configuration
-var config = {
-  "user": "sa", // Database username
-  "password": "p@ssw0rd", // Database password
-  "server": "localhost", // Server IP address
-  "database": "nexaDB", // Database name
-  "options": {
-      "encrypt": false // Disable encryption
-  }
-}
+// var config = {
+//   "user": "sa", // Database username
+//   "password": "p@ssw0rd", // Database password
+//   "server": "localhost", // Server IP address
+//   "database": "nexaDB", // Database name
+//   "options": {
+//       "encrypt": false // Disable encryption
+//   }
+// }
 
-// Connect to SQL Server
-sql.connect(config, err => {
-  if (err) {
-      throw err;
-  }
-  console.log("Connection Successful!");
-});
+// // Connect to SQL Server
+// sql.connect(config, err => {
+//   if (err) {
+//       throw err;
+//   }
+//   console.log("Connection Successful!");
+// });
 exports.create = (req, res) => {
     console.log(req.body)
     console.log(req.body.machine_type_name)
@@ -51,12 +51,31 @@ exports.create = (req, res) => {
         });
 };
 
-exports.getAllMachineTypeMachines = (req, res) => {
-  const machine_type_name = req.query.machine_type_name;
-  var condition = machine_type_name ? { machine_type_name: { [Op.like]: `%${machine_type_name}%` } } : null;
+exports.findOne = (req, res) => {
+  const id = req.params.id;
 
-  new sql.Request().query("  select MachineTypes.machine_type_id,MachineTypes.machine_type_name,Machines.machine_name,MachineTypes.machine_type_desc from MachineTypes "+
-  "inner join Machines on Machines.machine_type_id = MachineTypes.machine_type_id", (err, result) => {
+  MachineTypes.findByPk(id)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error retrieving Send History with id=" + id
+      });
+    });
+};
+
+exports.getAllMachineTypeMachines = (req, res) => {
+  // const machine_type_id = req.query.id;
+  // var condition = machine_type_name ? { machine_type_name: { [Op.like]: `%${machine_type_name}%` } } : null;
+
+  new sql.Request().query(
+  "Select MachineTypes.machine_type_id,MachineTypes.machine_type_name,MachineTypes.machine_type_desc,Machines.machine_id, "+
+  "Machines.machine_name,Machines.machine_description, Machines.number_of_heads, "+
+  "MachineHeadAssoc.head_id,MachineHeadAssoc.head_name "+
+  "from MachineTypes "+
+  "inner join Machines on MachineTypes.machine_type_id = Machines.machine_type_id "+
+  "left join MachineHeadAssoc on MachineHeadAssoc.machine_id = Machines.machine_id", (err, result) => {
     if (err) {
         console.error("Error executing query:", err);
     } else {
@@ -78,7 +97,7 @@ exports.getMachineTypeMachines = (req, res) => {
         res.send(result.recordset); // Send query result as response
         console.dir(result.recordset);
     }
-});
+  });
 };
 
 // Retrieve all Machine Types from the database.
@@ -99,18 +118,28 @@ exports.findAll = (req, res) => {
 };
 
 // Find a single Machine Types with an id
-exports.findOne = (req, res) => {
+exports.findOneMach = (req, res) => {
     const id = req.params.id;
 
-    MachineTypes.findByPk(id)
-      .then(data => {
-        res.send(data);
-      })
-      .catch(err => {
-        res.status(500).send({
-          message: "Error retrieving Machine Types with id=" + id
-        });
-      });
+    new sql.Request().query("  select Machines.machine_type_id,Machines.machine_id,Machines.machine_name,Machines.number_of_heads,Machines.machine_description  from MachineTypes "+
+  "inner join Machines on Machines.machine_type_id = MachineTypes.machine_type_id where MachineTypes.machine_type_id = "+id, (err, result) => {
+    if (err) {
+        console.error("Error executing query:", err);
+    } else {
+        res.send(result.recordset); // Send query result as response
+        console.dir(result.recordset);
+    }
+  });
+
+    // MachineTypes.findByPk(id)
+    //   .then(data => {
+    //     res.send(data);
+    //   })
+    //   .catch(err => {
+    //     res.status(500).send({
+    //       message: "Error retrieving Machine Types with id=" + id
+    //     });
+    //   });
 };
 
 // Update a Machine Types by the id in the request

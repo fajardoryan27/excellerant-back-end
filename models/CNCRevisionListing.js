@@ -15,17 +15,17 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.DATE,
       allowNull: true
     },
-    rev_date: {
-      type: DataTypes.DATE,
-      allowNull: true
-    },
-    revision_by: {
+    revised_by: {
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
         model: 'User',
         key: 'user_id'
       }
+    },
+    revision_date: {
+      type: DataTypes.DATE,
+      allowNull: true
     },
     revision_notes: {
       type: DataTypes.STRING(255),
@@ -47,7 +47,7 @@ module.exports = function(sequelize, DataTypes) {
     underscored: true,
     indexes: [
       {
-        name: "PK__CNCRevis__03BAF005477C521C",
+        name: "PK__CNCRevis__03BAF005E32DE934",
         unique: true,
         fields: [
           { name: "revision_id" },

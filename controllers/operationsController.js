@@ -2,6 +2,25 @@ const db = require("../models");
 const sql = require("mssql");
 const Operations = db.operations;
 const Op = db.Sequelize.Op;
+
+var config = {
+  "user": "sa", // Database username
+  "password": "p@ssw0rd", // Database password
+  "server": "localhost", // Server IP address
+  "database": "nexaDB", // Database name
+  "options": {
+      "encrypt": false // Disable encryption
+  }
+}
+
+// Connect to SQL Server
+sql.connect(config, err => {
+  if (err) {
+      throw err;
+  }
+  console.log("Connection Successful!");
+});
+
 exports.create = (req, res) => {
     if (!req.body.part_id) {
         res.status(400).send({
@@ -14,7 +33,7 @@ exports.create = (req, res) => {
       const operations = {
         part_id: req.body.part_id,
         operation_name: req.body.operation_name,
-        type: req.body.type,
+        operation_revision: req.body.operation_revision,
       };
 
       console.log(operations)
@@ -31,36 +50,70 @@ exports.create = (req, res) => {
         });
 };
 
-// Retrieve all Operations from the database.
 exports.findAll = (req, res) => {
-    const part_id = req.query.part_id;
-    var condition = part_id ? { part_id: { [Op.like]: `%${part_id}%` } } : null;
-  
-    Operations.findAll({ where: condition })
-      .then(data => {
-        res.send(data);
-      })
-      .catch(err => {
-        res.status(500).send({
-          message:
-            err.message || "Some error occurred while retrieving Operations."
-        });
+  const operation_name = req.query.operation_name;
+  var condition = operation_name ? { operation_name: { [Op.like]: `%${operation_name}%` } } : null;
+
+  Operations.findAll({ where: condition })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving Permissions."
       });
+    });
+};
+
+// Retrieve all Operations from the database.
+exports.findOneMachCNCProg = (req, res) => {
+    // const part_id = req.query.part_id;
+    const id = req.params.id;
+    // var condition = part_id ? { part_id: { [Op.like]: `%${part_id}%` } } : null;
+    new sql.Request().query("  select Operations.operations_id,Operations.operation_name,CNCProgram.program_id,CNCProgram.part_id,"+
+    "CNCProgram.machine_type_id,CNCProgram.head_id,CNCProgram.program_type,CNCProgram.creation_date,CNCProgram.program_file,CNCProgram.revision_id,CNCProgram.prod_status,CNCProgram.dl_status,CNCProgram.main_program_id "+
+    ",MachineTypes.machine_type_name,MachineTypes.machine_type_desc "+
+    "from Operations "+
+    "inner join CNCProgram on Operations.operations_id = CNCProgram.operation_id "+
+    "left join MachineTypes on CNCProgram.machine_type_id = MachineTypes.machine_type_id where Operations.operations_id ="+id, (err, result) => {
+    if (err) {
+        console.error("Error executing query:", err);
+    } else {
+        res.send(result.recordset); // Send query result as response
+        console.dir(result.recordset);
+    }
+});
+    
 };
 
 // Find a single Operations with an id
-exports.findOne = (req, res) => {
+exports.findOneAssoc = (req, res) => {
     const id = req.params.id;
+  // var condition = part_id ? { part_id: { [Op.like]: `%${part_id}%` } } : null;
+  new sql.Request().query(" select Operations.operations_id,Parts.part_name,Operations.part_id,Operations.operation_name,Operations.operation_revision FROM Operations"+
+ " inner join Parts on Parts.part_id = Operations.part_id where Parts.part_id = "+id, (err, result) => {
+    if (err) {
+        console.error("Error executing query:", err);
+    } else {
+        res.send(result.recordset); // Send query result as response
+        console.dir(result.recordset);
+    }
+});
+};
 
-    Operations.findByPk(id)
-      .then(data => {
-        res.send(data);
-      })
-      .catch(err => {
-        res.status(500).send({
-          message: "Error retrieving Operations with id=" + id
-        });
+exports.findOne = (req, res) => {
+  const id = req.params.id;
+
+  Operations.findByPk(id)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error retrieving Revision with id=" + id
       });
+    });
 };
 
 // Update a Operations by the id in the request
@@ -146,23 +199,7 @@ exports.findAllPublished = (req, res) => {
 
 
 // SQL Server configuration
-var config = {
-  "user": "sa", // Database username
-  "password": "p@ssw0rd", // Database password
-  "server": "localhost", // Server IP address
-  "database": "nexaDB", // Database name
-  "options": {
-      "encrypt": false // Disable encryption
-  }
-}
 
-// Connect to SQL Server
-sql.connect(config, err => {
-  if (err) {
-      throw err;
-  }
-  console.log("Connection Successful!");
-});
 
 exports.get_all_op_per_part = (req, res) => {
   const part_name = req.query.part_name;
@@ -178,14 +215,5 @@ exports.get_all_op_per_part = (req, res) => {
     }
 });
 
-  // Operations.findAll({ where: condition })
-  //   .then(data => {
-  //     res.send(data);
-  //   })
-  //   .catch(err => {
-  //     res.status(500).send({
-  //       message:
-  //         err.message || "Some error occurred while retrieving Operations."
-  //     });
-  //   });
+
 };

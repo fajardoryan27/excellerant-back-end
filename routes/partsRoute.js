@@ -7,12 +7,10 @@ module.exports = app => {
   
     // Retrieve all Parts
     router.get("/", parts.findAll);
-  
+    router.get("/operations/machineTypes/CNCProgram/:id", parts.findAllPartAssoc);
+    router.get("/:id", parts.findOne);
     // Retrieve all published Parts
     router.get("/published", parts.findAllPublished);
-  
-    // Retrieve a single Part with id
-    router.get("/:id", parts.findOne);
   
     // Update a Part with id
     router.put("/:id", parts.update);

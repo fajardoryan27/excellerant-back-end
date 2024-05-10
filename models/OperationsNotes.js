@@ -16,11 +16,11 @@ module.exports = function(sequelize, DataTypes) {
       }
     },
     date_added: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DATE,
       allowNull: true
     },
     note_details: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.TEXT,
       allowNull: true
     },
     user_id: {
@@ -39,7 +39,7 @@ module.exports = function(sequelize, DataTypes) {
     underscored: true,
     indexes: [
       {
-        name: "PK__Operatio__A84547CE864835C5",
+        name: "PK__Operatio__A84547CE8EE5AC04",
         unique: true,
         fields: [
           { name: "op_notes_id" },

@@ -35,29 +35,37 @@ module.exports = function(sequelize, DataTypes) {
         key: 'head_id'
       }
     },
-    order: {
-      type: DataTypes.STRING(255),
+    program_type: {
+      type: DataTypes.INTEGER,
       allowNull: true
     },
-    approval_requirements: {
+    creation_date: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    program_file: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    revision_id: {
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
-        model: 'Status',
-        key: 'status_id'
-      }
-    },
-    program_name: {
-      type: DataTypes.STRING(255),
-      allowNull: true
-    },
-    revision: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'Revision',
+        model: 'CNCRevisionListing',
         key: 'revision_id'
       }
+    },
+    prod_status: {
+      type: DataTypes.STRING(255),
+      allowNull: true
+    },
+    dl_status: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
+    main_program_id: {
+      type: DataTypes.STRING(255),
+      allowNull: true
     }
   }, {
     sequelize,
@@ -67,7 +75,7 @@ module.exports = function(sequelize, DataTypes) {
     underscored: true,
     indexes: [
       {
-        name: "PK__CNCProgr__3A7890ACD9AB8D5E",
+        name: "PK__CNCProgr__3A7890AC404809C2",
         unique: true,
         fields: [
           { name: "program_id" },

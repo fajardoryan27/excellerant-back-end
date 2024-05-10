@@ -43,22 +43,18 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.approvalList = require("./ApprovalList.js")(sequelize, Sequelize);
 db.parts = require("./Parts.js")(sequelize, Sequelize);
 db.operations = require("./Operations.js")(sequelize, Sequelize);
 db.machineTypes = require("./MachineTypes.js")(sequelize, Sequelize);
 db.operationsMachineTypes = require("./OperationsMachineTypes.js")(sequelize, Sequelize);
 db.head = require("./MachineHeadAssoc.js")(sequelize, Sequelize);
 db.machine = require("./Machines.js")(sequelize, Sequelize);
-db.machine_types_member = require("./MachineTypesMember.js")(sequelize, Sequelize);
-db.status = require("./Status.js")(sequelize, Sequelize);
 db.user = require("./User.js")(sequelize, Sequelize);
-db.revision = require("./Revision.js")(sequelize, Sequelize);
+db.revision = require("./CNCRevisionListing.js")(sequelize, Sequelize);
 db.cncProgram = require("./CNCProgram.js")(sequelize, Sequelize);
 db.sendHistory = require("./SendHistory.js")(sequelize, Sequelize);
 db.permission = require("./Permissions.js")(sequelize, Sequelize);
-db.usergroups = require("./UserGroups.js")(sequelize, Sequelize);
-db.userrole = require("./UserRoles.js")(sequelize, Sequelize);
-db.userrole_permission = require("./UserRolesPermission.js")(sequelize, Sequelize);
+db.userrole = require("./Roles.js")(sequelize, Sequelize);
+db.userrole_permission = require("./RolesPermission.js")(sequelize, Sequelize);
 
 module.exports = db;

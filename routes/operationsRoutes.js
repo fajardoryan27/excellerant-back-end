@@ -4,10 +4,11 @@ module.exports = app => {
   
     // Create a new Operation
     router.post("/", parts.create);
-  
-    // Retrieve all Operations
     router.get("/", parts.findAll);
-    router.get("/parts/operations/", parts.get_all_op_per_part);
+    // Retrieve all Operations
+    
+    router.get("/machineTypes/CNCProgram/:id", parts.findOneMachCNCProg);
+    router.get("/parts/:id", parts.findOneAssoc);
     // Retrieve all published Operations
     router.get("/published", parts.findAllPublished);
   

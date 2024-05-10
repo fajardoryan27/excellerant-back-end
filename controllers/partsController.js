@@ -1,6 +1,26 @@
 const db = require("../models");
 const Parts = db.parts;
+const sql = require("mssql");
 const Op = db.Sequelize.Op;
+
+var config = {
+  "user": "sa", // Database username
+  "password": "p@ssw0rd", // Database password
+  "server": "localhost", // Server IP address
+  "database": "nexaDB", // Database name
+  "options": {
+      "encrypt": false // Disable encryption
+  }
+}
+
+// Connect to SQL Server
+sql.connect(config, err => {
+  if (err) {
+      throw err;
+  }
+  console.log("Connection Successful!");
+});
+
 exports.create = (req, res) => {
     console.log(req.body)
     console.log(req.body.part_name)
@@ -14,11 +34,8 @@ exports.create = (req, res) => {
       // Create a Part
       const parts = {
         part_name: req.body.part_name,
-        approval_requirements: req.body.approval_requirements,
         description: req.body.description,
-        itar_restricted: req.body.itar_restricted,
-        revision_number: req.body.revision_number,
-        part_authorization_type:req.body.part_authorization_type,
+        part_revision: req.body.part_revision,
       };
 
       console.log(parts)
@@ -35,6 +52,25 @@ exports.create = (req, res) => {
         });
 };
 
+exports.findAllPartAssoc = (req, res) => {
+  const id = req.params.id;
+  new sql.Request().query("  select Parts.part_id,Parts.part_name,Parts.part_revision,Parts.description,Operations.operations_id,Operations.operation_name,CNCProgram.program_id"+
+  ",CNCProgram.machine_type_id,CNCProgram.head_id,CNCProgram.program_type,CNCProgram.creation_date,CNCProgram.program_file,CNCProgram.revision_id,CNCProgram.prod_status,CNCProgram.dl_status,CNCProgram.main_program_id"+
+  ",MachineTypes.machine_type_name,MachineTypes.machine_type_desc "+
+  "from Operations "+
+  "full join CNCProgram on Operations.operations_id = CNCProgram.operation_id "+
+  "full join MachineTypes on CNCProgram.machine_type_id = MachineTypes.machine_type_id "+
+  "full join Parts on Parts.part_id = Operations.part_id "+
+  "where Parts.part_id IS NOT NULL and Parts.part_id  ="+id, (err, result) => {
+     if (err) {
+         console.error("Error executing query:", err);
+     } else {
+         res.send(result.recordset); // Send query result as response
+         console.dir(result.recordset);
+     }
+ });
+};
+
 // Retrieve all Parts from the database.
 exports.findAll = (req, res) => {
     const part_name = req.query.part_name;
@@ -48,21 +84,6 @@ exports.findAll = (req, res) => {
         res.status(500).send({
           message:
             err.message || "Some error occurred while retrieving Parts."
-        });
-      });
-};
-
-// Find a single Part with an id
-exports.findOne = (req, res) => {
-    const id = req.params.id;
-
-    Parts.findByPk(id)
-      .then(data => {
-        res.send(data);
-      })
-      .catch(err => {
-        res.status(500).send({
-          message: "Error retrieving Part with id=" + id
         });
       });
 };
@@ -133,7 +154,20 @@ exports.deleteAll = (req, res) => {
           });
         });
 };
+// Find a single Parts with an id
+exports.findOne = (req, res) => {
+  const id = req.params.id;
 
+  Parts.findByPk(id)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error retrieving Permission with id=" + id
+      });
+    });
+};
 // Find all published Parts
 exports.findAllPublished = (req, res) => {
     Parts.findAll({ where: { published: true } })

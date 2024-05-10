@@ -26,14 +26,6 @@ module.exports = function(sequelize, DataTypes) {
     email: {
       type: DataTypes.STRING(255),
       allowNull: true
-    },
-    role_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'UserRoles',
-        key: 'role_id'
-      }
     }
   }, {
     sequelize,
@@ -43,7 +35,7 @@ module.exports = function(sequelize, DataTypes) {
     underscored: true,
     indexes: [
       {
-        name: "PK__User__B9BE370F258B8888",
+        name: "PK__User__B9BE370F6F28807E",
         unique: true,
         fields: [
           { name: "user_id" },

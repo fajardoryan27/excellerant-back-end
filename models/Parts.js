@@ -15,11 +15,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.TEXT,
       allowNull: true
     },
-    itar_restricted: {
-      type: DataTypes.BOOLEAN,
-      allowNull: true
-    },
-    revision_number: {
+    part_revision: {
       type: DataTypes.INTEGER,
       allowNull: true
     }
@@ -31,7 +27,7 @@ module.exports = function(sequelize, DataTypes) {
     underscored: true,
     indexes: [
       {
-        name: "PK__Parts__A0E3FAB8441053E5",
+        name: "PK__Parts__A0E3FAB892DDFDD0",
         unique: true,
         fields: [
           { name: "part_id" },

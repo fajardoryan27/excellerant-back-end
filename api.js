@@ -12,14 +12,12 @@ app.use(bodyParser.urlencoded({ extended: true}))
 app.use(bodyParser.json());
 app.use(cors());
 
-require("./routes/approvalListRoutes")(app);
 require("./routes/partsRoute")(app);
 require("./routes/operationsRoutes")(app);
 require("./routes/machineTypesRoutes")(app);
 require("./routes/operationTypesMachineRoutes")(app);
 require("./routes/headRoutes")(app);
 require("./routes/machineRoutes")(app);
-require("./routes/machineTypesMemberRoutes")(app);
 require("./routes/statusRoutes")(app);
 require("./routes/userRoutes")(app);
 require("./routes/revisionRoutes")(app);

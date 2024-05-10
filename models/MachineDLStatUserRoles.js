@@ -7,20 +7,20 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true
     },
-    role_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'UserRoles',
-        key: 'role_id'
-      }
-    },
     part_id: {
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
         model: 'Parts',
         key: 'part_id'
+      }
+    },
+    role_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'Roles',
+        key: 'role_id'
       }
     },
     required_num_users: {
@@ -35,7 +35,7 @@ module.exports = function(sequelize, DataTypes) {
     underscored: true,
     indexes: [
       {
-        name: "PK__MachineD__0EADEE716656C093",
+        name: "PK__MachineD__0EADEE711DDF46A1",
         unique: true,
         fields: [
           { name: "machine_stat_user_role_id" },
