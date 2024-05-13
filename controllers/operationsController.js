@@ -2,16 +2,7 @@ const db = require("../models");
 const sql = require("mssql");
 const Operations = db.operations;
 const Op = db.Sequelize.Op;
-
-var config = {
-  "user": "sa", // Database username
-  "password": "p@ssw0rd", // Database password
-  "server": "localhost", // Server IP address
-  "database": "nexaDB", // Database name
-  "options": {
-      "encrypt": false // Disable encryption
-  }
-}
+const config =  require("../database");
 
 // Connect to SQL Server
 sql.connect(config, err => {
@@ -35,8 +26,6 @@ exports.create = (req, res) => {
         operation_name: req.body.operation_name,
         operation_revision: req.body.operation_revision,
       };
-
-      console.log(operations)
     
       Operations.create(operations)
         .then(data => {

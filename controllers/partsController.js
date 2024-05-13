@@ -1,17 +1,8 @@
 const db = require("../models");
 const Parts = db.parts;
 const sql = require("mssql");
+const config =  require("../database");
 const Op = db.Sequelize.Op;
-
-var config = {
-  "user": "sa", // Database username
-  "password": "p@ssw0rd", // Database password
-  "server": "localhost", // Server IP address
-  "database": "nexaDB", // Database name
-  "options": {
-      "encrypt": false // Disable encryption
-  }
-}
 
 // Connect to SQL Server
 sql.connect(config, err => {
@@ -22,8 +13,6 @@ sql.connect(config, err => {
 });
 
 exports.create = (req, res) => {
-    console.log(req.body)
-    console.log(req.body.part_name)
     if (!req.body.part_name) {
         res.status(400).send({
           message: "Content can not be empty!"
