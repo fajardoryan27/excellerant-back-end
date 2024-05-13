@@ -64,8 +64,8 @@ exports.findOneMachCNCProg = (req, res) => {
     "CNCProgram.machine_type_id,CNCProgram.head_id,CNCProgram.program_type,CNCProgram.creation_date,CNCProgram.program_file,CNCProgram.revision_id,CNCProgram.prod_status,CNCProgram.dl_status,CNCProgram.main_program_id "+
     ",MachineTypes.machine_type_name,MachineTypes.machine_type_desc "+
     "from Operations "+
-    "inner join CNCProgram on Operations.operations_id = CNCProgram.operation_id "+
-    "left join MachineTypes on CNCProgram.machine_type_id = MachineTypes.machine_type_id where Operations.operations_id ="+id, (err, result) => {
+    "full join CNCProgram on Operations.operations_id = CNCProgram.operation_id "+
+    "full join MachineTypes on CNCProgram.machine_type_id = MachineTypes.machine_type_id where Operations.operations_id ="+id, (err, result) => {
     if (err) {
         console.error("Error executing query:", err);
     } else {
