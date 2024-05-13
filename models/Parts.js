@@ -16,7 +16,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     part_revision: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING(255),
       allowNull: true
     }
   }, {
@@ -27,7 +27,7 @@ module.exports = function(sequelize, DataTypes) {
     underscored: true,
     indexes: [
       {
-        name: "PK__Parts__A0E3FAB892DDFDD0",
+        name: "PK__Parts__A0E3FAB8B3046A76",
         unique: true,
         fields: [
           { name: "part_id" },

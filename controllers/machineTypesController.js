@@ -2,25 +2,41 @@ const db = require("../models");
 const MachineTypes = db.machineTypes;
 const Op = db.Sequelize.Op;
 const sql = require("mssql");
-const sqlConnect = require('../database')
-// SQL Server configuration
-// var config = {
-//   "user": "sa", // Database username
-//   "password": "p@ssw0rd", // Database password
-//   "server": "localhost", // Server IP address
-//   "database": "nexaDB", // Database name
-//   "options": {
-//       "encrypt": false // Disable encryption
-//   }
-// }
 
-// // Connect to SQL Server
-// sql.connect(config, err => {
-//   if (err) {
-//       throw err;
-//   }
-//   console.log("Connection Successful!");
-// });
+
+
+exports.create2 = (req, res) => {
+  
+  console.log(req.body.machine_type_name)
+  if (!req.body.machine_type_name) {
+      res.status(400).send({
+        message: "Content can not be empty!"
+      });
+      return;
+    }
+
+    // Create a Machine Types
+    const machineTypes = {
+      machine_type_name: req.body.machine_type_name,
+      machine_type_desc:req.body.machine_type_desc
+    };
+
+    console.log(machineTypes)
+  
+    // MachineTypes.create(machineTypes)
+    //   .then(data => {
+    //     res.send(data);
+    //     console.log('===================',data.dataValues,'data moves')
+    //   })
+    //   .catch(err => {
+    //     res.status(500).send({
+    //       message:
+    //         console.log(err.message) 
+    //     });
+    //   });
+};
+
+
 exports.create = (req, res) => {
     console.log(req.body)
     console.log(req.body.machine_type_name)
@@ -42,6 +58,7 @@ exports.create = (req, res) => {
       MachineTypes.create(machineTypes)
         .then(data => {
           res.send(data);
+          console.log('===================',data.dataValues,'data moves')
         })
         .catch(err => {
           res.status(500).send({

@@ -43,13 +43,18 @@ exports.create = (req, res) => {
 
 exports.findAllPartAssoc = (req, res) => {
   const id = req.params.id;
-  new sql.Request().query("  select Parts.part_id,Parts.part_name,Parts.part_revision,Parts.description,Operations.operations_id,Operations.operation_name,CNCProgram.program_id"+
-  ",CNCProgram.machine_type_id,CNCProgram.head_id,CNCProgram.program_type,CNCProgram.creation_date,CNCProgram.program_file,CNCProgram.revision_id,CNCProgram.prod_status,CNCProgram.dl_status,CNCProgram.main_program_id"+
-  ",MachineTypes.machine_type_name,MachineTypes.machine_type_desc "+
-  "from Operations "+
-  "full join CNCProgram on Operations.operations_id = CNCProgram.operation_id "+
-  "full join MachineTypes on CNCProgram.machine_type_id = MachineTypes.machine_type_id "+
-  "full join Parts on Parts.part_id = Operations.part_id "+
+  new sql.Request().query(" select Parts.part_id, Parts.part_name,Operations.operations_id, Operations.operation_name, "+
+	" MachineTypes.machine_type_id,MachineTypes.machine_type_name,MachineTypes.machine_type_desc, "+
+	" Machines.machine_id, Machines.machine_name, Machines.machine_description,Machines.number_of_heads, "+
+	" MachineHeadAssoc.head_id, MachineHeadAssoc.head_name, CNCProgram.program_id, CNCProgram.prod_status,CNCProgram.dl_status, "+
+	" CNCProgram.main_program_id, CNCProgram.program_file,CNCProgram.program_type,CNCProgram.revision_id,CNCProgram.creation_date "+
+	" from Parts "+
+	" full join Operations on Operations.part_id = Parts.part_id "+
+	" full join OperationsMachineTypes on Operations.operations_id = OperationsMachineTypes.operations_id "+
+	" full join MachineTypes on OperationsMachineTypes.machine_type_id = MachineTypes.machine_type_id "+
+	" full join Machines on Machines.machine_type_id = MachineTypes.machine_type_id "+
+	" full join MachineHeadAssoc on MachineHeadAssoc.machine_id = Machines.machine_id "+
+	" full join CNCProgram on CNCProgram.part_id = Parts.part_id "+
   "where Parts.part_id IS NOT NULL and Parts.part_id  ="+id, (err, result) => {
      if (err) {
          console.error("Error executing query:", err);

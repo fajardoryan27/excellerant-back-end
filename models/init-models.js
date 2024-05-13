@@ -54,6 +54,8 @@ function initModels(sequelize) {
   CNCRevisionListing.hasMany(SendHistory, { as: "SendHistories", foreignKey: "revision_id"});
   CNCProgram.belongsTo(MachineHeadAssoc, { as: "head", foreignKey: "head_id"});
   MachineHeadAssoc.hasMany(CNCProgram, { as: "CNCPrograms", foreignKey: "head_id"});
+  CNCProgram.belongsTo(MachineTypes, { as: "machine_type", foreignKey: "machine_type_id"});
+  MachineTypes.hasMany(CNCProgram, { as: "CNCPrograms", foreignKey: "machine_type_id"});
   MachineTypesMemberAssoc.belongsTo(MachineTypes, { as: "machine_type", foreignKey: "machine_type_id"});
   MachineTypes.hasMany(MachineTypesMemberAssoc, { as: "MachineTypesMemberAssocs", foreignKey: "machine_type_id"});
   Machines.belongsTo(MachineTypes, { as: "machine_type", foreignKey: "machine_type_id"});
@@ -64,8 +66,8 @@ function initModels(sequelize) {
   Machines.hasMany(MachineHeadAssoc, { as: "MachineHeadAssocs", foreignKey: "machine_id"});
   MachineTypesMemberAssoc.belongsTo(Machines, { as: "machine", foreignKey: "machine_id"});
   Machines.hasMany(MachineTypesMemberAssoc, { as: "MachineTypesMemberAssocs", foreignKey: "machine_id"});
-  CNCProgram.belongsTo(Operations, { as: "machine_type", foreignKey: "machine_type_id"});
-  Operations.hasMany(CNCProgram, { as: "CNCPrograms", foreignKey: "machine_type_id"});
+  CNCProgram.belongsTo(Operations, { as: "operation", foreignKey: "operation_id"});
+  Operations.hasMany(CNCProgram, { as: "CNCPrograms", foreignKey: "operation_id"});
   OperationsMachineTypes.belongsTo(Operations, { as: "operation", foreignKey: "operations_id"});
   Operations.hasMany(OperationsMachineTypes, { as: "OperationsMachineTypes", foreignKey: "operations_id"});
   OperationsNotes.belongsTo(Operations, { as: "operation", foreignKey: "operations_id"});

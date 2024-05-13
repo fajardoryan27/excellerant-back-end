@@ -27,7 +27,7 @@ require("./routes/permissionRoutes")(app);
 require("./routes/userGroupRoutes")(app);
 require("./routes/userRoleRoutes")(app);
 require("./routes/userRolePermissionRoutes")(app);
-
+require("./routes/partDocAssocRoutes")(app);
 db.sequelize.sync();
 app.listen(port)
 console.log('Server running in '+ port)

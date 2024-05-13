@@ -56,5 +56,5 @@ db.sendHistory = require("./SendHistory.js")(sequelize, Sequelize);
 db.permission = require("./Permissions.js")(sequelize, Sequelize);
 db.userrole = require("./Roles.js")(sequelize, Sequelize);
 db.userrole_permission = require("./RolesPermission.js")(sequelize, Sequelize);
-
+db.partDoc = require("./PartsDocumentAssociation.js")(sequelize, Sequelize);
 module.exports = db;

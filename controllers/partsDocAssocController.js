@@ -1,5 +1,5 @@
 const db = require("../models");
-const CncProgram = db.cncProgram;
+const PartDoc = db.partDoc;
 const Op = db.Sequelize.Op;
 exports.create = (req, res) => {
     console.log(req.body)
@@ -9,23 +9,17 @@ exports.create = (req, res) => {
           message: "Content can not be empty!"
         });
         return;
-      }
+    }
 
-      // Create a CNC Program
-      const cncProgram = {
+      // Create a Send History
+      const part_docs = {
         part_id: req.body.part_id,
-        operation_id: req.body.operation_id,
-        machine_type_id:req.body.machine_type_id,
-        head_id: req.body.head_id,
-        order: req.body.order,
-        approval_requirements: req.body.approval_requirements,
-        program_name: req.body.program_name,
-        revision: req.body.revision
+        p_docs_location: req.body.p_docs_location,
       };
 
-      console.log(cncProgram)
+      console.log(part_docs)
     
-      CncProgram.create(cncProgram)
+      PartDoc.create(part_docs)
         .then(data => {
           res.send(data);
         })
@@ -37,115 +31,115 @@ exports.create = (req, res) => {
         });
 };
 
-// Retrieve all Tutorials from the database.
+// Retrieve all Send History from the database.
 exports.findAll = (req, res) => {
     const part_id = req.query.part_id;
     var condition = part_id ? { part_id: { [Op.like]: `%${part_id}%` } } : null;
   
-    CncProgram.findAll({ where: condition })
+    PartDoc.findAll({ where: condition })
       .then(data => {
         res.send(data);
       })
       .catch(err => {
         res.status(500).send({
           message:
-            err.message || "Some error occurred while retrieving tutorials."
+            err.message || "Some error occurred while retrieving Send History."
         });
       });
 };
 
-// Find a single CNC Program with an id
+// Find a single Send History with an id
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
-    CncProgram.findByPk(id)
+    PartDoc.findByPk(id)
       .then(data => {
         res.send(data);
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error retrieving CNC Program with id=" + id
+          message: "Error retrieving Send History with id=" + id
         });
       });
 };
 
-// Update a CNC Program by the id in the request
+// Update a Send History by the id in the request
 exports.update = (req, res) => {
     const id = req.params.id;
     console.log(id)
-    CncProgram.update(req.body, {
-      where: { program_id: id }
+    PartDoc.update(req.body, {
+      where: { part_docs_id: id }
     })
       .then(num => {
         if (num == 1) {
           res.send({
-            message: "CNC Program was updated successfully."
+            message: "Send History was updated successfully."
           });
         } else {
           res.send({
-            message: `Cannot update CNC Program with id=${id}. Maybe CNC Program was not found or req.body is empty!`
+            message: `Cannot update Send History with id=${id}. Maybe Send History was not found or req.body is empty!`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error updating CNC Program with id=" + id + err
+          message: "Error updating Send History with id=" + id
         });
       });
 };
 
-// Delete a CNC Program with the specified id in the request
+// Delete a Send History with the specified id in the request
 exports.delete = (req, res) => {
     const id = req.params.id;
 
-    CncProgram.destroy({
-        where: { program_id: id }  
+    PartDoc.destroy({
+        where: { part_docs_id: id }  
     })
       .then(num => {
         if (num == 1) {
           res.send({
-            message: "CNC Program was deleted successfully!"
+            message: "Send History was deleted successfully!"
           });
         } else {
           res.send({
-            message: `Cannot delete CNC Program with id=${id}. Maybe CNC Program was not found!`
+            message: `Cannot delete Send History with id=${id}. Maybe Send History was not found!`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Could not delete CNC Program with id=" + id
+          message: "Could not delete Send History with id=" + id
         });
       });
 };
 
-// Delete all Tutorials from the database.
+// Delete all Send History from the database.
 exports.deleteAll = (req, res) => {
-    CncProgram.destroy({
+    PartDoc.destroy({
         where: {},
         truncate: false
       })
         .then(nums => {
-          res.send({ message: `${nums} Tutorials were deleted successfully!` });
+          res.send({ message: `${nums} Send History were deleted successfully!` });
         })
         .catch(err => {
           res.status(500).send({
             message:
-              err.message || "Some error occurred while removing all tutorials."
+              err.message || "Some error occurred while removing all Send History."
           });
         });
 };
 
-// Find all published Tutorials
+// Find all published Send History
 exports.findAllPublished = (req, res) => {
-    Revision.findAll({ where: { published: true } })
+    PartDoc.findAll({ where: { published: true } })
     .then(data => {
       res.send(data);
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving tutorials."
+          err.message || "Some error occurred while retrieving Send History."
       });
     });
 };

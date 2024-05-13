@@ -27,7 +27,7 @@ module.exports = function(sequelize, DataTypes) {
     underscored: true,
     indexes: [
       {
-        name: "PK__MachineH__D6BE0713CE8B3FAC",
+        name: "PK__MachineH__D6BE0713D622210A",
         unique: true,
         fields: [
           { name: "head_id" },

@@ -31,7 +31,7 @@ module.exports = function(sequelize, DataTypes) {
     underscored: true,
     indexes: [
       {
-        name: "PK__CNCProgr__CEDD0FA42DA1D051",
+        name: "PK__CNCProgr__CEDD0FA46571A040",
         unique: true,
         fields: [
           { name: "note_id" },
