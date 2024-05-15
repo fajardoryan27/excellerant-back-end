@@ -28,6 +28,10 @@ require("./routes/userGroupRoutes")(app);
 require("./routes/userRoleRoutes")(app);
 require("./routes/userRolePermissionRoutes")(app);
 require("./routes/partDocAssocRoutes")(app);
+require("./routes/cncProdAssocRoutes")(app);
+require("./routes/cncDLAssocRoutes")(app);
+require("./routes/PartsProdUserRolesRoutes")(app);
+require("./routes/MachineDLStatUserRolesRoutes")(app);
 db.sequelize.sync();
 app.listen(port)
 console.log('Server running in '+ port)

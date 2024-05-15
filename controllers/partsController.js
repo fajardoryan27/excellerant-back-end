@@ -41,6 +41,38 @@ exports.create = (req, res) => {
         });
 };
 
+exports.findAllPartDLStatRole = (req, res) => {
+  const id = req.params.id;
+  new sql.Request().query("  select Parts.part_id, Parts.part_name,Parts.description,Parts.part_revision,CNCProgram.program_id,CNCProgram.dl_status,Roles.role_id,Roles.role_name "+
+  " from Parts "+
+  " inner join CNCProgram on Parts.part_id = CNCProgram.part_id "+
+  " inner join CNCProdAssocRoles on CNCProdAssocRoles.program_id = CNCProgram.program_id "+
+  " inner join Roles on CNCProdAssocRoles.role_id = Roles.role_id ", (err, result) => {
+     if (err) {
+         console.error("Error executing query:", err);
+     } else {
+         res.send(result.recordset); // Send query result as response
+         console.dir(result.recordset);
+     }
+ });
+};
+
+exports.findAllPartProdStatRole = (req, res) => {
+  const id = req.params.id;
+  new sql.Request().query("  select Parts.part_id, Parts.part_name,Parts.description,Parts.part_revision,CNCProgram.program_id,CNCProgram.prod_status,Roles.role_id,Roles.role_name "+
+  " from Parts "+
+  " inner join CNCProgram on Parts.part_id = CNCProgram.part_id "+
+  " inner join CNCProdAssocRoles on CNCProdAssocRoles.program_id = CNCProgram.program_id "+
+  " inner join Roles on CNCProdAssocRoles.role_id = Roles.role_id ", (err, result) => {
+     if (err) {
+         console.error("Error executing query:", err);
+     } else {
+         res.send(result.recordset); // Send query result as response
+         console.dir(result.recordset);
+     }
+ });
+};
+
 exports.findAllPartAssoc = (req, res) => {
   const id = req.params.id;
   new sql.Request().query(" select Parts.part_id, Parts.part_name,Operations.operations_id, Operations.operation_name, "+

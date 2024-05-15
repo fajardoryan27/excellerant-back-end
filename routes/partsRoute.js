@@ -7,6 +7,8 @@ module.exports = app => {
   
     // Retrieve all Parts
     router.get("/", parts.findAll);
+    router.get("/prodstatus/user-roles", parts.findAllPartProdStatRole);
+    router.get("/dlstatus/user-roles", parts.findAllPartDLStatRole);
     router.get("/operations/machineTypes/CNCProgram/:id", parts.findAllPartAssoc);
     router.get("/:id", parts.findOne);
     // Retrieve all published Parts

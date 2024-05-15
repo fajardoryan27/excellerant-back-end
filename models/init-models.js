@@ -1,4 +1,5 @@
 var DataTypes = require("sequelize").DataTypes;
+var _CNCDownloadAssocRoles = require("./CNCDownloadAssocRoles");
 var _CNCProdAssocRoles = require("./CNCProdAssocRoles");
 var _CNCProgram = require("./CNCProgram");
 var _CNCProgramNotes = require("./CNCProgramNotes");
@@ -22,6 +23,7 @@ var _SendHistory = require("./SendHistory");
 var _User = require("./User");
 
 function initModels(sequelize) {
+  var CNCDownloadAssocRoles = _CNCDownloadAssocRoles(sequelize, DataTypes);
   var CNCProdAssocRoles = _CNCProdAssocRoles(sequelize, DataTypes);
   var CNCProgram = _CNCProgram(sequelize, DataTypes);
   var CNCProgramNotes = _CNCProgramNotes(sequelize, DataTypes);
@@ -44,6 +46,8 @@ function initModels(sequelize) {
   var SendHistory = _SendHistory(sequelize, DataTypes);
   var User = _User(sequelize, DataTypes);
 
+  CNCDownloadAssocRoles.belongsTo(CNCProgram, { as: "program", foreignKey: "program_id"});
+  CNCProgram.hasMany(CNCDownloadAssocRoles, { as: "CNCDownloadAssocRoles", foreignKey: "program_id"});
   CNCProdAssocRoles.belongsTo(CNCProgram, { as: "program", foreignKey: "program_id"});
   CNCProgram.hasMany(CNCProdAssocRoles, { as: "CNCProdAssocRoles", foreignKey: "program_id"});
   SendHistory.belongsTo(CNCProgram, { as: "program", foreignKey: "program_id"});
@@ -86,6 +90,8 @@ function initModels(sequelize) {
   Parts.hasMany(PartsProdUserRoles, { as: "PartsProdUserRoles", foreignKey: "part_id"});
   RolesPermission.belongsTo(Permissions, { as: "permission", foreignKey: "permission_id"});
   Permissions.hasMany(RolesPermission, { as: "RolesPermissions", foreignKey: "permission_id"});
+  CNCDownloadAssocRoles.belongsTo(Roles, { as: "role", foreignKey: "role_id"});
+  Roles.hasMany(CNCDownloadAssocRoles, { as: "CNCDownloadAssocRoles", foreignKey: "role_id"});
   MachineDLStatUserRoles.belongsTo(Roles, { as: "role", foreignKey: "role_id"});
   Roles.hasMany(MachineDLStatUserRoles, { as: "MachineDLStatUserRoles", foreignKey: "role_id"});
   PartsProdUserRoles.belongsTo(Roles, { as: "role", foreignKey: "role_id"});
@@ -108,6 +114,7 @@ function initModels(sequelize) {
   User.hasMany(SendHistory, { as: "sent_by_SendHistories", foreignKey: "sent_by"});
 
   return {
+    CNCDownloadAssocRoles,
     CNCProdAssocRoles,
     CNCProgram,
     CNCProgramNotes,
