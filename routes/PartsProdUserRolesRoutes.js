@@ -1,26 +1,26 @@
 module.exports = app => {
     const PartsProdUserRoles = require("../controllers/PartsProdUserRolesController.js");
     var router = require("express").Router();
-  
+    const authenticateJWT  = require("../middleware/verifytoken.js");
     // Create a new Approval
-    router.post("/", PartsProdUserRoles.create);
+    router.post("/",authenticateJWT, PartsProdUserRoles.create);
   
     // Retrieve all Approvals
-    router.get("/", PartsProdUserRoles.findAll);
+    router.get("/",authenticateJWT, PartsProdUserRoles.findAll);
   
     // Retrieve all published Approvals
-    router.get("/published", PartsProdUserRoles.findAllPublished);
+    router.get("/published", authenticateJWT,PartsProdUserRoles.findAllPublished);
     // Retrieve a single Approval with id
-    router.get("/:id", PartsProdUserRoles.findOne);
+    router.get("/:id", authenticateJWT,PartsProdUserRoles.findOne);
   
     // Update a Approval with id
-    router.put("/:id", PartsProdUserRoles.update);
+    router.put("/:id",authenticateJWT, PartsProdUserRoles.update);
   
     // Delete a Approval with id
-    router.delete("/:id", PartsProdUserRoles.delete);
+    router.delete("/:id", authenticateJWT,PartsProdUserRoles.delete);
   
     // Delete all Approvals
-    router.delete("/", PartsProdUserRoles.deleteAll);
+    router.delete("/", authenticateJWT,PartsProdUserRoles.deleteAll);
   
     app.use('/api/PartsProdUserRoles', router);
   };

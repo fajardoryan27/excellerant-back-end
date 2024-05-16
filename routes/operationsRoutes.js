@@ -1,28 +1,28 @@
 module.exports = app => {
-    const parts = require("../controllers/operationsController.js");
+    const operations = require("../controllers/operationsController.js");
     var router = require("express").Router();
-  
+    const authenticateJWT  = require("../middleware/verifytoken.js");
     // Create a new Operation
-    router.post("/", parts.create);
-    router.get("/", parts.findAll);
+    router.post("/", authenticateJWT,operations.create);
+    router.get("/", authenticateJWT,operations.findAll);
     // Retrieve all Operations
     
-    router.get("/machineTypes/CNCProgram/:id", parts.findOneMachCNCProg);
-    router.get("/parts/:id", parts.findOneAssoc);
+    router.get("/machineTypes/CNCProgram/:id", authenticateJWT,operations.findOneMachCNCProg);
+    router.get("/parts/:id", authenticateJWT,operations.findOneAssoc);
     // Retrieve all published Operations
-    router.get("/published", parts.findAllPublished);
+    router.get("/published", authenticateJWT,operations.findAllPublished);
   
     // Retrieve a single Operation with id
-    router.get("/:id", parts.findOne);
+    router.get("/:id", authenticateJWT,operations.findOne);
   
     // Update a Operation with id
-    router.put("/:id", parts.update);
+    router.put("/:id", authenticateJWT,operations.update);
   
     // Delete a Operation with id
-    router.delete("/:id", parts.delete);
+    router.delete("/:id", authenticateJWT,operations.delete);
   
     // Delete all Operations
-    router.delete("/", parts.deleteAll);
+    router.delete("/", authenticateJWT,operations.deleteAll);
     
     
 

@@ -1,27 +1,27 @@
 module.exports = app => {
     const head = require("../controllers/headController.js");
     var router = require("express").Router();
-  
+    const authenticateJWT  = require("../middleware/verifytoken.js");
     // Create a new Head
-    router.post("/", head.create);
+    router.post("/", authenticateJWT,head.create);
   
     // Retrieve all Heads
-    router.get("/", head.findAll);
+    router.get("/", authenticateJWT,head.findAll);
   
     // Retrieve all published Heads
-    router.get("/published", head.findAllPublished);
+    router.get("/published", authenticateJWT,head.findAllPublished);
   
     // Retrieve a single Head with id
-    router.get("/:id", head.findOne);
+    router.get("/:id",authenticateJWT, head.findOne);
   
     // Update a Head with id
-    router.put("/:id", head.update);
+    router.put("/:id",authenticateJWT, head.update);
   
     // Delete a Head with id
-    router.delete("/:id", head.delete);
+    router.delete("/:id", authenticateJWT,head.delete);
   
     // Delete all Heads
-    router.delete("/", head.deleteAll);
+    router.delete("/", authenticateJWT,head.deleteAll);
   
     app.use('/api/head', router);
   };

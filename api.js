@@ -7,7 +7,7 @@ var ini = require('ini')
 var fs = require('fs')
 var config = ini.parse(fs.readFileSync('./Config.ini', 'utf-8'))
 var port = config['serverPort']|| 8090;
-
+let verifyToken = require('./middleware/verifytoken');
 app.use(bodyParser.urlencoded({ extended: true}))
 app.use(bodyParser.json());
 app.use(cors());
@@ -32,6 +32,8 @@ require("./routes/cncProdAssocRoutes")(app);
 require("./routes/cncDLAssocRoutes")(app);
 require("./routes/PartsProdUserRolesRoutes")(app);
 require("./routes/MachineDLStatUserRolesRoutes")(app);
+require("./routes/authRoutes")(app);
+
 db.sequelize.sync();
 app.listen(port)
 console.log('Server running in '+ port)

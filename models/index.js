@@ -27,7 +27,7 @@ const sequelize = new Sequelize(config['dbName'], config['dbUser'], decText, {
   dialect: config['dialect'],
   // dialectOptions: {
   //   "options": {
-  //       "instanceName": "SQLEXPRESS",
+  //       "instanceName": "MSSQLSERVER",
   //   }
   // },
   pool: {

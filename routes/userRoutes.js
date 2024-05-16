@@ -1,27 +1,27 @@
 module.exports = app => {
     const user = require("../controllers/userController.js");
     var router = require("express").Router();
-  
+    const authenticateJWT  = require("../middleware/verifytoken.js");
     // Create a new User
-    router.post("/", user.create);
+    router.post("/sign_up", user.create);
   
     // Retrieve all Users
-    router.get("/", user.findAll);
+    router.get("/", authenticateJWT, user.findAll);
   
     // Retrieve all published Users
-    router.get("/published", user.findAllPublished);
+    router.get("/published",authenticateJWT, user.findAllPublished);
   
     // Retrieve a single User with id
-    router.get("/:id", user.findOne);
+    router.get("/:id",authenticateJWT, user.findOne);
   
     // Update a User with id
-    router.put("/:id", user.update);
+    router.put("/:id",authenticateJWT,  user.update);
   
     // Delete a User with id
-    router.delete("/:id", user.delete);
+    router.delete("/:id",authenticateJWT, user.delete);
   
     // Delete all Users
-    router.delete("/", user.deleteAll);
+    router.delete("/",authenticateJWT, user.deleteAll);
   
     app.use('/api/user', router);
   };

@@ -1,27 +1,27 @@
 module.exports = app => {
     const machine = require("../controllers/machineController.js");
     var router = require("express").Router();
-  
+    const authenticateJWT  = require("../middleware/verifytoken.js");
     // Create a new Machine
-    router.post("/", machine.create);
+    router.post("/", authenticateJWT,machine.create);
   
     // Retrieve all Machines
-    router.get("/", machine.findAll);
+    router.get("/",authenticateJWT, machine.findAll);
   
     // Retrieve all published Machines
-    router.get("/published", machine.findAllPublished);
+    router.get("/published", authenticateJWT,machine.findAllPublished);
   
     // Retrieve a single Machine with id
-    router.get("/:id", machine.findOne);
+    router.get("/:id",authenticateJWT, machine.findOne);
   
     // Update a Machine with id
-    router.put("/:id", machine.update);
+    router.put("/:id",authenticateJWT, machine.update);
   
     // Delete a Machine with id
-    router.delete("/:id", machine.delete);
+    router.delete("/:id", authenticateJWT,machine.delete);
   
     // Delete all Machines
-    router.delete("/", machine.deleteAll);
+    router.delete("/",authenticateJWT, machine.deleteAll);
   
     app.use('/api/machine', router);
   };

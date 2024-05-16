@@ -1,27 +1,27 @@
 module.exports = app => {
     const parts = require("../controllers/partsController.js");
     var router = require("express").Router();
-  
+    const authenticateJWT  = require("../middleware/verifytoken.js");
     // Create a new Part
-    router.post("/", parts.create);
+    router.post("/",authenticateJWT, parts.create);
   
     // Retrieve all Parts
-    router.get("/", parts.findAll);
-    router.get("/prodstatus/user-roles", parts.findAllPartProdStatRole);
-    router.get("/dlstatus/user-roles", parts.findAllPartDLStatRole);
-    router.get("/operations/machineTypes/CNCProgram/:id", parts.findAllPartAssoc);
-    router.get("/:id", parts.findOne);
+    router.get("/", authenticateJWT,parts.findAll);
+    router.get("/prodstatus/user-roles", authenticateJWT,parts.findAllPartProdStatRole);
+    router.get("/dlstatus/user-roles",authenticateJWT, parts.findAllPartDLStatRole);
+    router.get("/operations/machineTypes/CNCProgram/:id", authenticateJWT,parts.findAllPartAssoc);
+    router.get("/:id", authenticateJWT,parts.findOne);
     // Retrieve all published Parts
-    router.get("/published", parts.findAllPublished);
+    router.get("/published",authenticateJWT, parts.findAllPublished);
   
     // Update a Part with id
-    router.put("/:id", parts.update);
+    router.put("/:id",authenticateJWT,parts.update);
   
     // Delete a Part with id
-    router.delete("/:id", parts.delete);
+    router.delete("/:id", authenticateJWT,parts.delete);
   
     // Delete all Parts
-    router.delete("/", parts.deleteAll);
+    router.delete("/",authenticateJWT, parts.deleteAll);
   
     app.use('/api/parts', router);
   };

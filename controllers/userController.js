@@ -1,6 +1,10 @@
+const { password } = require("../database");
 const db = require("../models");
 const User = db.user;
 const Op = db.Sequelize.Op;
+const bcrypt = require("bcrypt");
+
+
 exports.create = (req, res) => {
     console.log(req.body)
     console.log(req.body.user_name)
@@ -10,26 +14,36 @@ exports.create = (req, res) => {
         });
         return;
     }
-
-      // Create a User
-      const user = {
-        user_name: req.body.user_name,
-        user_email: req.body.user_email,
-        user_group: req.body.user_group,
-      };
-
-      console.log(user)
     
-      User.create(user)
-        .then(data => {
-          res.send(data);
-        })
-        .catch(err => {
-          res.status(500).send({
-            message:
-              console.log(err.message) 
-          });
+    const saltRounds = 10
+    const password = req.body.user_password
+    bcrypt.genSalt(saltRounds).then(salt => {
+    console.log('Salt: ', salt)
+    return bcrypt.hash(password, salt)
+  })
+  .then(hash => {
+    // console.log('Hash: ', hash)
+    const user = {
+      user_name: req.body.user_name,
+      user_password: hash,
+      first_name: req.body.first_name,
+      last_name: req.body.last_name,
+      email: req.body.email,
+    };
+
+    User.create(user)
+      .then(data => {
+        res.send(data);
+      })
+      .catch(err => {
+        res.status(500).send({
+          message:
+            console.log(err.message) 
         });
+      });
+  })
+  .catch(err => console.error(err.message))
+      
 };
 
 // Retrieve all Users from the database.
