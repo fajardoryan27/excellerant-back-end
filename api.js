@@ -10,7 +10,12 @@ var port = config['serverPort']|| 8090;
 let verifyToken = require('./middleware/verifytoken');
 app.use(bodyParser.urlencoded({ extended: true}))
 app.use(bodyParser.json());
-app.use(cors());
+// Enable CORS for all origins
+app.use(cors({
+  origin: process.env.FRONT_LOCAL_URL,
+  credentials: true // Allow credentials (e.g., cookies, authorization headers)
+}));
+
 
 require("./routes/partsRoute")(app);
 require("./routes/operationsRoutes")(app);
