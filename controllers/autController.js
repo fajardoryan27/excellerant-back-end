@@ -11,9 +11,9 @@ sql.connect(config, err => {
     console.log("Connection Successful!");
   });
 exports.generateToken = (req, res) => {
-    const email = req.body.email
+    const user_name = req.body.user_name
     const user_password = req.body.user_password
-    new sql.Request().query("select * from [User] where email = "+"'"+email+"'", (err, result) => {
+    new sql.Request().query("select * from [User] where user_name = "+"'"+user_name+"'", (err, result) => {
      if (err) {
          console.error("Error executing query:", err);
      } else {
