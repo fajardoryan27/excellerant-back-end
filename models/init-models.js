@@ -92,6 +92,8 @@ function initModels(sequelize) {
   Permissions.hasMany(RolesPermission, { as: "RolesPermissions", foreignKey: "permission_id"});
   CNCDownloadAssocRoles.belongsTo(Roles, { as: "role", foreignKey: "role_id"});
   Roles.hasMany(CNCDownloadAssocRoles, { as: "CNCDownloadAssocRoles", foreignKey: "role_id"});
+  CNCProdAssocRoles.belongsTo(Roles, { as: "role", foreignKey: "role_id"});
+  Roles.hasMany(CNCProdAssocRoles, { as: "CNCProdAssocRoles", foreignKey: "role_id"});
   MachineDLStatUserRoles.belongsTo(Roles, { as: "role", foreignKey: "role_id"});
   Roles.hasMany(MachineDLStatUserRoles, { as: "MachineDLStatUserRoles", foreignKey: "role_id"});
   PartsProdUserRoles.belongsTo(Roles, { as: "role", foreignKey: "role_id"});

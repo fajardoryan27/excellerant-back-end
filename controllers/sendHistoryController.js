@@ -1,7 +1,15 @@
 const db = require("../models");
-const moment = require("moment");
+const sql = require("mssql");
 const SendHistory = db.sendHistory;
 const Op = db.Sequelize.Op;
+const config =  require("../database");
+sql.connect(config, err => {
+  if (err) {
+      throw err;
+  }
+  console.log("Connection Successful!");
+});
+
 exports.create = (req, res) => {
     console.log(req.body)
     console.log(req.body.send_date)
@@ -11,32 +19,25 @@ exports.create = (req, res) => {
         });
         return;
       }
-      var momentDate = moment("2014-09-15 09:00:00");
-       console.log(momentDate.toDate()) 
-       console.log(Date.parse(momentDate.toDate()))
+      var tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
+      var localISOTime = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1);
       // Create a Send History
-      const send_history = {
-        program_id: req.body.program_id,
-        revision_id: req.body.revision_id,
-        sent_by: req.body.sent_by,
-        machine_sent_to: req.body.machine_sent_to,
-        head_sent_to: req.body.head_sent_to,
-        // send_date:'1410742800000',
-      };
-
-
-      console.log(send_history)
-    
-      SendHistory.create(send_history)
-        .then(data => {
-          res.send(data);
-        })
-        .catch(err => {
-          res.status(500).send({
-            message:
-              console.log(err.message) 
-          });
-        });
+      
+      var  program_id =req.body.program_id
+      var  revision_id =req.body.revision_id
+      var  sent_by =req.body.sent_by
+      var  machine_sent_to =req.body.machine_sent_to
+      var  head_sent_to= req.body.head_sent_to
+      var send_date=localISOTime
+      new sql.Request().query("  insert into SendHistory values("+program_id+","+revision_id+","+sent_by+","+machine_sent_to+","+head_sent_to+","+"'"+send_date+"')", (err, result) => {
+        if (err) {
+            console.error("Error executing query:", err);
+        } else {
+           res.status(201)
+           res.send("History Successfully Created."); // Send query result as response
+     
+        }
+    });
 };
 
 // Retrieve all Send Histories from the database.

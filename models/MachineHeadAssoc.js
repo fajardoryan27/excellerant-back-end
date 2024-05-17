@@ -33,6 +33,13 @@ module.exports = function(sequelize, DataTypes) {
           { name: "head_id" },
         ]
       },
+      {
+        name: "PK__MachineH__D6BE0713DE1A6473",
+        unique: true,
+        fields: [
+          { name: "head_id" },
+        ]
+      },
     ]
   });
 };

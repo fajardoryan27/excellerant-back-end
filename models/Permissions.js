@@ -29,6 +29,13 @@ module.exports = function(sequelize, DataTypes) {
           { name: "permission_id" },
         ]
       },
+      {
+        name: "PK__Permissi__E5331AFAD141BECB",
+        unique: true,
+        fields: [
+          { name: "permission_id" },
+        ]
+      },
     ]
   });
 };

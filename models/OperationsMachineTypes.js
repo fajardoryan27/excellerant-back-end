@@ -37,6 +37,13 @@ module.exports = function(sequelize, DataTypes) {
           { name: "operations_machine_types_id" },
         ]
       },
+      {
+        name: "PK__Operatio__9B63027788A2276D",
+        unique: true,
+        fields: [
+          { name: "operations_machine_types_id" },
+        ]
+      },
     ]
   });
 };

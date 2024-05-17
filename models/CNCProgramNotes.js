@@ -37,6 +37,13 @@ module.exports = function(sequelize, DataTypes) {
           { name: "note_id" },
         ]
       },
+      {
+        name: "PK__CNCProgr__CEDD0FA49215E25F",
+        unique: true,
+        fields: [
+          { name: "note_id" },
+        ]
+      },
     ]
   });
 };

@@ -33,6 +33,13 @@ module.exports = function(sequelize, DataTypes) {
           { name: "part_docs_id" },
         ]
       },
+      {
+        name: "PK__PartsDoc__95227D82D14562ED",
+        unique: true,
+        fields: [
+          { name: "part_docs_id" },
+        ]
+      },
     ]
   });
 };

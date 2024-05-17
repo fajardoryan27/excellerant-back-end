@@ -60,7 +60,7 @@ module.exports = function(sequelize, DataTypes) {
       }
     },
     prod_status: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.INTEGER,
       allowNull: true
     },
     dl_status: {
@@ -68,7 +68,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     main_program_id: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.INTEGER,
       allowNull: true
     }
   }, {
@@ -78,6 +78,13 @@ module.exports = function(sequelize, DataTypes) {
     timestamps: false,
     underscored: true,
     indexes: [
+      {
+        name: "PK__CNCProgr__3A7890AC5E5CE0AE",
+        unique: true,
+        fields: [
+          { name: "program_id" },
+        ]
+      },
       {
         name: "PK__CNCProgr__3A7890AC9DD07DE9",
         unique: true,

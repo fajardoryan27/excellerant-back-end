@@ -17,7 +17,11 @@ module.exports = function(sequelize, DataTypes) {
     },
     role_id: {
       type: DataTypes.INTEGER,
-      allowNull: true
+      allowNull: true,
+      references: {
+        model: 'Roles',
+        key: 'role_id'
+      }
     }
   }, {
     sequelize,
@@ -26,6 +30,13 @@ module.exports = function(sequelize, DataTypes) {
     timestamps: false,
     underscored: true,
     indexes: [
+      {
+        name: "PK__CNCProdA__3213E83FCBBADFAB",
+        unique: true,
+        fields: [
+          { name: "id" },
+        ]
+      },
       {
         name: "PK__CNCProdA__3213E83FCEF5152C",
         unique: true,

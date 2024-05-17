@@ -65,6 +65,13 @@ module.exports = function(sequelize, DataTypes) {
           { name: "send_id" },
         ]
       },
+      {
+        name: "PK__SendHist__E794FE7D668B03D6",
+        unique: true,
+        fields: [
+          { name: "send_id" },
+        ]
+      },
     ]
   });
 };
